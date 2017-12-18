@@ -12,9 +12,17 @@
     "url": "git+https://github.com/Chill-Fellows/chill-fellows-client.git"
   },
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/Chill-Fellows/chill-fellows-client/issues"
   },
-  "homepage": "https://github.com/Chill-Fellows/chill-fellows-client#readme"
+  "homepage": "https://github.com/Chill-Fellows/chill-fellows-client#readme",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "cors": "^2.8.4",
+    "express": "^4.16.2",
+    "fs": "0.0.1-security",
+    "pg": "^7.4.0",
+    "superagent": "^3.8.2"
+  }
 }

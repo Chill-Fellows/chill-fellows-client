@@ -4,15 +4,170 @@
     <meta charset="utf-8">
     <title>Chill Fellows</title>
     <!-- links to stylesheets -->
+    <link rel="stylesheets" href="public/styles/reset.css">
+
+    <!-- handlebars.js templates -->
+    <script id="error-template" type="text/x-handlebars-template">
+      <h3>Oops! Something went wrong</h3>
+      <p>{{status}}: {{statusText}}</p>
+    </script>
+
+    <script id="dashboard-template" type="text/x-handlebars-template">
+      <li class="movie-items" data-movieid={{movie_id}}>
+          <img src={{image_url}}>
+          <div class="movie-overlay">
+            <h3>{{title}}</h3>
+            <button class="add-button">Add to Watch List</button>
+          </div>
+      </li>
+    </script>
+
+    <script id="watchlist-template" type="text/x-handlebars-template">
+      <li class="movie-items" data-movieid={{movie_id}}>
+          <img src={{image_url}}>
+          <div class="movie-overlay">
+            <h3>{{title}}</h3>
+            <button class="delete-button">Remove from Watch List</button>
+          </div>
+      </li>
+    </script>
+
   </head>
+
   <body>
 
     <header>
       <!-- main navigation -->
+      <nav>
+        <ul>
+          <li>Home</li>
+          <li>Take the Test</li>
+          <li>Log Out</li>
+        </ul>
+      </nav>
+
     </header>
 
     <main>
       <!-- SPA style application -->
+      <h1>Chill Fellows</h1>
+
+      <section id="log-in" class="log-in container">
+        <h3>Please Sign In</h3>
+
+        <div id="sign-up" class="sign-up container">
+          <form class="sign-up">
+            <fieldset>
+              <input type="text" id="first-name" name="name" placeholder="First Name" required>
+            </fieldset>
+            <fieldset>
+              <input type="text" id="last-name" name="name" placeholder="Last Name" required>
+            </fieldset>
+          </form>
+        </div>
+
+        <form class="log-in">
+          <fieldset>
+            <input type="text" id="username" name="name" placeholder="username" required>
+          </fieldset>
+          <fieldset>
+            <input id="password" type="password" placeholder="password" pattern="[0-9a-z]{4,8}"
+            required autocomplete="off">
+            <p>Password must be 4-8 characters, numbers and lowercase letters only.</p>
+          </fieldset>
+          <button type="submit">Get Started</button>
+        </form>
+
+      </section>
+
+      <section id="personality" class="personality container">
+        <ol>
+          <li>
+            You are totally exhausted because your week was endless and less than great. How are you going to spend your weekend?
+            <form>
+              <fieldset>
+                <input type="radio" id="e" name="ei" value="e">
+                <label for="e">
+                  I’ll call my friends to ask about their plans I’ll suggest we all go out together to check out the new restaurant/club.
+                </label>
+              </fieldset>
+              <fieldset>
+                <input type="radio" id="i" name="ei" value="i">
+                <label for="i">
+                  I’ll switch on the "Don’t disturb" mode on my phone and stay at home. I’ll watch a new episode of my favorite TV show, do a puzzle, and take a long bath with a book.
+                </label>
+              </fieldset>
+            </form>
+          </li>
+
+
+          <li>
+            Which of these two descriptions suits you more?
+            <form>
+              <fieldset>
+                <input type="radio" id="s" name="sn" value="s">
+                <label for="e">
+                  The most important thing for me is what’s happening here and now. I assess real situations and pay attention to details.
+                </label>
+              </fieldset>
+              <fieldset>
+                <input type="radio" id="n" name="sn" value="n">
+                <label for="i">
+                  Facts are boring. I love to dream and play over upcoming events in my mind. I rely more on intuition than information.
+                </label>
+              </fieldset>
+            </form>
+          </li>
+
+          <li>
+            You have a major life decision coming up. How are you going to make a decision?
+            <form>
+              <fieldset>
+                <input type="radio" id="t" name="tf" value="t">
+                <label for="t">
+                  I’ll learn all the available information about the competitor, ask my HR manager for advice, and draw a chart with all the pros and cons. In such cases, it’s important to weigh up all the arguments and assess the situation with a cold mind.
+                </label>
+              </fieldset>
+              <fieldset>
+                <input type="radio" id="f" name="tf" value="f">
+                <label for="f">
+                  I’ll listen to my feelings. I always try to follow my heart.
+                </label>
+              </fieldset>
+            </form>
+          </li>
+
+          <li>
+            Only 2 weeks are left until the big event you are planning. How are the preparations going?
+            <form>
+              <fieldset>
+                <input type="radio" id="j" name="jp" value="j">
+                <label for="j">
+                  I have detailed checklist with tasks and dates to be completed. I prefer to be fully armed.
+                </label>
+              </fieldset>
+              <fieldset>
+                <input type="radio" id="p" name="jp" value="p">
+                <label for="p">
+                  I’ve got the big things taken care of and I’ll improvise the rest. The best things happen spontaneously.
+                </label>
+              </fieldset>
+            </form>
+          </li>
+        </ol>
+        <button type="submit">Show Me the Movies!</button>
+      </section>
+
+      <section id="dashboard" class="dashboard container">
+        <ul id="movie-suggestions">
+        </ul>
+      </section>
+
+      <section id="watchlist" class="watchlist container">
+        <ul id="movie-list">
+        </ul>
+      </section>
+
     </main>
 
     <footer>
@@ -20,5 +175,8 @@
     </footer>
 
     <!-- Scripts go here -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
+    <script src="https://cdn.rawgit.com/visionmedia/page.js/master/page.js"></script>
   </body>
 </html>

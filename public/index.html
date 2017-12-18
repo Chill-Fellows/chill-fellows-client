@@ -4,7 +4,36 @@
     <meta charset="utf-8">
     <title>Chill Fellows</title>
     <!-- links to stylesheets -->
+    <link rel="stylesheets" href="public/styles/reset.css">
+
+    <!-- handlebars.js templates -->
+    <script id="error-template" type="text/x-handlebars-template">
+      <h3>Oops! Something went wrong</h3>
+      <p>{{status}}: {{statusText}}</p>
+    </script>
+
+    <script id="dashboard-template" type="text/x-handlebars-template">
+      <li class="movie-items" data-movieid={{movie_id}}>
+          <img src={{image_url}}>
+          <div class="movie-overlay">
+            <h3>{{title}}</h3>
+            <button class="add-button">Add to Watch List</button>
+          </div>
+      </li>
+    </script>
+
+    <script id="watchlist-template" type="text/x-handlebars-template">
+      <li class="movie-items" data-movieid={{movie_id}}>
+          <img src={{image_url}}>
+          <div class="movie-overlay">
+            <h3>{{title}}</h3>
+            <button class="delete-button">Remove from Watch List</button>
+          </div>
+      </li>
+    </script>
+
   </head>
+  
   <body>
 
     <header>
@@ -13,6 +42,47 @@
 
     <main>
       <!-- SPA style application -->
+      <h1>Chill Fellows</h1>
+
+      <section id="log-in" class="log-in container">
+        <h3>Please Sign In</h3>
+
+        <div id="sign-up" class="sign-up container">
+          <form class="sign-up">
+            <fieldset>
+              <input type="text" id="first-name" name="name" placeholder="First Name" required>
+            </fieldset>
+            <fieldset>
+              <input type="text" id="last-name" name="name" placeholder="Last Name" required>
+            </fieldset>
+          </form>
+        </div>
+
+        <form class="log-in">
+          <fieldset>
+            <input type="text" id="username" name="name" placeholder="username" required>
+          </fieldset>
+          <fieldset>
+            <input id="password" type="password" placeholder="password" pattern="[0-9a-z]{4,8}"
+            required autocomplete="off">
+            <p>Password must be 4-8 characters, numbers and lowercase letters only.</p>
+          </fieldset>
+          <button type="submit">Get Started</button>
+        </form>
+
+      </section>
+
+      <section id="personality" class="personality container">
+      </section>
+
+      <section id="dashboard" class="dashboard container">
+        <ul id="movie-suggestions">
+        </ul>
+      </section>
+
+      <section id="watchlist" class="watchlist container">
+      </section>
+
     </main>
 
     <footer>

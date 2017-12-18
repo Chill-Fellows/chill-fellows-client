@@ -1,2 +1,2 @@
-# chill-fellows-client
-Movie App based on personality
+# Chill Fellows
+Movie app based on personality

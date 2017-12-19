@@ -46,7 +46,7 @@ var __API_URL__ = 'http://localhost:3000';
       // .then(() => page('/'))
       .catch(errorCallback);
   }
-
+// deletes movie from watchlist
   Movie.delete = id => {
     $.ajax({
       url: `${__API_URL__}/api/v1/chillfellows/${id}`,
@@ -55,6 +55,28 @@ var __API_URL__ = 'http://localhost:3000';
     // .then(() => page('/watchlist'))
     .catch(errorCallback);
   }
+
+// gets movie info from api to add to user's watchlist table
+  Movie.addOne = movie => {
+    $.get(`${__API_URL__}/api/v1/chillfellows/search/${movie.id}`)
+      .then(Movie.addToDB)
+      .catch(errorCallback);
+  }
+
+// // adds movie to user's watchlist table
+//   Movie.create = movie => {
+//     $.post(`${__API_URL__}/api/v1/chillfellows`, movie)
+//       .then(console.log)
+//       // .then(() => page('/'))
+//       .catch(errorCallback);
+//   }
+
+
+  // Movie.find = movie => {
+  //   $.get(`${__API_URL__}/api/v1/chillfellows/search`, movie)
+  //     .then(Movie.loadAll)
+  //     .catch(errorCallback);
+  // }
 
 }) (app);
 

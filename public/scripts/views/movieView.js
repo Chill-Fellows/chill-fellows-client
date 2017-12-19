@@ -5,26 +5,29 @@ var app = app || {};
 (function(module) {
 
   const movieView = {};
-  const radioValue = [];
   let mb_score;
 
   movieView.initIndexPage = function() {
     console.log('init');
     $('.container').hide();
-    $('.').show();
+    if (localStorage.username) $('.watchlist').show();
+    if (!localStorage.username) {
+      app.loginView.initLoginPage();
+    }
   }
 
   movieView.initTestPage = function () {
     console.log('test');
     $('.container').hide();
-    $('.').show();
+    $('.personality').show();
     $('#personality').on('submit', function(event)) {
       event.preventDefault();
+
+      let radioValue = [];
 
       radioValue.push($('input[name= "ei"]:checked'.val());
       radioValue.push($('input[name= "sn"]:checked'.val());
       radioValue.push($('input[name= "tf"]:checked'.val());          radioValue.push($('input[name= "jp"]:checked'.val());
-      };
 
       if (radioValue = ['e', 's', 't', 'j']) mb_score = 36;
       if (radioValue = ['e', 'n', 't', 'j']) mb_score = 10752;
@@ -42,14 +45,25 @@ var app = app || {};
       if (radioValue = ['i', 's', 'f', 'j']) mb_score = 14;
       if (radioValue = ['i', 's', 't', 'p']) mb_score = 28;
       if (radioValue = ['i', 's', 't', 'j']) mb_score = 35;
+
+      app.User({mb_score: `${mb_score}`}); // ?
+      app.Movie.findGenre(mb_score, movieView.initDashboardPage));
+    };
+
+    // movieView.initDashboardPage(mb_score);
   }
 
-
-  movieView.initQueuePage = function () {
-    console.log('watchlist');
+  movieView.initDashboardPage = function() {
     $('.container').hide();
-    $('.').show();
+    $('.dashboard').show();
+    $('.dashboard').empty();
+    app.Movie.all.map(movie => $('#movie-suggestions').append(movie.toHtml))
+
+    $('.add-button').on('submit', function(event) {
+      app.Movie.addOne($(this).parent().parent().data('movieid'))
+    })
   }
+
 
   module.movieView = movieView;
 

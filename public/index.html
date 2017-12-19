@@ -13,20 +13,21 @@
     </script>
 
     <script id="dashboard-template" type="text/x-handlebars-template">
-      <li class="movie-items" data-movieid={{movie_id}}>
-          <img src={{image_url}}>
+      <li class="movie-items" data-movieid={{id}}>
+          <img src={{poster_path}}>
           <div class="movie-overlay">
             <h3>{{title}}</h3>
-            <button class="add-button">Add to Watch List</button>
+            <button type="submit" class="add-button">Add to Watch List</button>
           </div>
       </li>
     </script>
 
     <script id="watchlist-template" type="text/x-handlebars-template">
       <li class="movie-items" data-movieid={{movie_id}}>
-          <img src={{image_url}}>
+          <img src={{poster_path}}>
           <div class="movie-overlay">
             <h3>{{title}}</h3>
+            <!-- <p>{{overview}}</p> -->
             <button class="delete-button">Remove from Watch List</button>
           </div>
       </li>
@@ -75,7 +76,9 @@
             required autocomplete="off">
             <p>Password must be 4-8 characters, numbers and lowercase letters only.</p>
           </fieldset>
-          <button type="submit">Get Started</button>
+          <button id="log-in-button" type="submit">Get Started</button>
+          <button id="new-user-button" type="button">New User?</button>
+          <button id="sign-up-button" type="submit">Sign Up</button>
         </form>
 
       </section>
@@ -86,7 +89,7 @@
             You are totally exhausted because your week was endless and less than great. How are you going to spend your weekend?
             <form>
               <fieldset>
-                <input type="radio" id="e" name="ei" value="e">
+                <input type="radio" id="e" name="ei" value="e" requires>
                 <label for="e">
                   I’ll call my friends to ask about their plans I’ll suggest we all go out together to check out the new restaurant/club.
                 </label>
@@ -105,7 +108,7 @@
             Which of these two descriptions suits you more?
             <form>
               <fieldset>
-                <input type="radio" id="s" name="sn" value="s">
+                <input type="radio" id="s" name="sn" value="s" required>
                 <label for="e">
                   The most important thing for me is what’s happening here and now. I assess real situations and pay attention to details.
                 </label>
@@ -123,7 +126,7 @@
             You have a major life decision coming up. How are you going to make a decision?
             <form>
               <fieldset>
-                <input type="radio" id="t" name="tf" value="t">
+                <input type="radio" id="t" name="tf" value="t" required>
                 <label for="t">
                   I’ll learn all the available information about the competitor, ask my HR manager for advice, and draw a chart with all the pros and cons. In such cases, it’s important to weigh up all the arguments and assess the situation with a cold mind.
                 </label>
@@ -141,7 +144,7 @@
             Only 2 weeks are left until the big event you are planning. How are the preparations going?
             <form>
               <fieldset>
-                <input type="radio" id="j" name="jp" value="j">
+                <input type="radio" id="j" name="jp" value="j" required>
                 <label for="j">
                   I have detailed checklist with tasks and dates to be completed. I prefer to be fully armed.
                 </label>

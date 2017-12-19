@@ -11,6 +11,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 const CLIENT_URL = process.env.CLIENT_URL;
 const TOKEN = process.env.TOKEN;
+const TMDB_API_KEY = process.env.TMDB_API_KEY;
 
 const client = new pg.Client(process.env.DATABASE_URL);
 
@@ -23,21 +24,31 @@ app.use(express.static('./public'));
 app.use(bodyparser.urlencoded({ extended: false }));
 app.use(bodyparser.json());
 
-// let user1 = {
-//   first_name: 'roger',
-//   last_name: 'davenport',
-//   mb_score: 'entj',
-//   username: 'bob123',
-//   password: 'sleepydog'
-// };
-// let movie = {
-//   user_id: '1',
-//   movie_name: 'highlander',
-//   movie_genre: 'war'
-// };
+app.get('api/v1/chillfellows/search/:id', (req, res) => {
+  let url = `https://api.themoviedb.org/3/discover/movie?${TMDB_API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_genres=${req.params.id}`;
+  superagent.get(url)
+    .then(result => {
+      result.body.results.map(movie =>{
+        return {
+          id: movie.id,
+          title: movie.title,
+          poster_path: movie.poster_path,
+          backdrop_path: movie.backdrop_path,
+          overview: movie.overview,
+          vote_average: movie.vote_average
+        }
+      })
+    })
+    .then(resultarray => res.send(resultarray))
+    .catch(console.error)
+})
+app.get('api/v1/chillfellows/search/user/:id', (req, res) => {
+
+})
+
+
 
 createTables();
-// insertTestData(user1, movie);
 
 
 
@@ -63,16 +74,3 @@ function createTables() {
     movie_genre VARCHAR(20) NOT NULL);`);
 
 }
-
-// function insertTestData(u, q) {
-//   client.query(`
-//       INSERT INTO users
-//       (first_name, last_name, mb_score, username, password) VALUES
-//       ($1, $2, $3, $4, $5);`,
-//     [u.first_name, u.last_name, u.mb_score, u.username, u.password]
-//   );
-//   client.query(`
-//       INSERT INTO watchlist
-//       (user_id, movie_name, movie_genre) VALUES ($1, $2, $3);`,
-//     [q.user_id, q.movie_name, q.movie_genre]);
-// }

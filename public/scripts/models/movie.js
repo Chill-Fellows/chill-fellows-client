@@ -47,6 +47,15 @@ var __API_URL__ = 'http://localhost:3000';
       .catch(errorCallback);
   }
 
+  Movie.delete = id => {
+    $.ajax({
+      url: `${__API_URL__}/api/v1/chillfellows/${id}`,
+      method: 'DELETE'
+    })
+    // .then(() => page('/watchlist'))
+    .catch(errorCallback);
+  }
+
 }) (app);
 
 //api/v1/chillfellows/search/:id

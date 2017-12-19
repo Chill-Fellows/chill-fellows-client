@@ -1,4 +1,4 @@
-'use strict';
+'use strict'
 
 var app = app || {};
 
@@ -18,12 +18,13 @@ var app = app || {};
     console.log('test');
     $('.container').hide();
     $('.').show();
-    $('#personality').on('submit', function(event)) {
+    $('#personality').on('submit', function(event) {
       event.preventDefault();
 
-      radioValue.push($('input[name= "ei"]:checked'.val());
-      radioValue.push($('input[name= "sn"]:checked'.val());
-      radioValue.push($('input[name= "tf"]:checked'.val());          radioValue.push($('input[name= "jp"]:checked'.val());
+      radioValue.push($('input[name= "ei"]:checked'.val())
+      radioValue.push($('input[name= "sn"]:checked'.val())
+      radioValue.push($('input[name= "tf"]:checked'.val())
+      radioValue.push($('input[name= "jp"]:checked'.val())
       };
 
       if (radioValue = ['e', 's', 't', 'j']) mb_score = 36;

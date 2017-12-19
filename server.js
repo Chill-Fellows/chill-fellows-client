@@ -42,9 +42,9 @@ app.get('api/v1/chillfellows/search/:id', (req, res) => {
     .then(resultarray => res.send(resultarray))
     .catch(console.error)
 })
-app.get('api/v1/chillfellows/search/user/:id', (req, res) => {
-
-})
+// app.get('api/v1/chillfellows/search/user/:id', (req, res) => {
+//
+// })
 
 
 

@@ -64,6 +64,27 @@ var app = app || {};
     })
   }
 
+  //this function will show the list of movies the user has selected for future viewing
+  movieView.initWatchlistPage = (ctx) => {
+     console.log('watchlist');
+     $('.container').hide();
+     $('.watchlist container').show();
+     $('#movie-list').empty;
+     app.Movie.loadAll(ctx);
+     let template = Handlebars.compile($('#watchlist-template').text());
+     $('#movie-list').append(template(ctx.movie));
+
+     $('#delete-button').on('click', function(event) {
+       event.preventDefault();
+       app.Movie.delete($(this).parent().parent().data('movieid'))
+     });
+
+     $('#test-button').on('click', function(event) {
+       event.preventDefault();
+       movieView.initTestPage();
+     });
+   }
+
 
   module.movieView = movieView;
 

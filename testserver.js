@@ -23,3 +23,7 @@
 //       (user_id, movie_name, movie_genre) VALUES ($1, $2, $3);`,
 //     [q.user_id, q.movie_name, q.movie_genre]);
 // }
+// superagent.get(runTimeUrl)
+//   .then(singlemovie => { movieRunTime = singlemovie.body.runtime; return movieRunTime})
+//   console.log('movieRuntime', movieRunTime);
+// let runTimeUrl = `https://api.themoviedb.org/3/movie/${id}?api_key=${TMDB_API_KEY}&language=en-US`;

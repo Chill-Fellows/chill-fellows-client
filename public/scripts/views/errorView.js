@@ -2,6 +2,7 @@
 
 var app = app || {};
 
+// This function runs when there is an error and displays the status code
 (function (module) {
   const errorView = {};
 

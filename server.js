@@ -12,6 +12,7 @@ const PORT = process.env.PORT || 3000;
 const CLIENT_URL = process.env.CLIENT_URL;
 const TOKEN = process.env.TOKEN;
 const TMDB_API_KEY = process.env.TMDB_API_KEY;
+//var __API_URL__ = 'http://localhost:3000';
 
 const client = new pg.Client(process.env.DATABASE_URL);
 
@@ -21,38 +22,47 @@ client.on('error', err => console.error(err));
 app.use(cors());
 app.use(express.static('./public'));
 
-app.use(bodyparser.urlencoded({ extended: false }));
+app.use(bodyparser.urlencoded({ extended: true }));
 app.use(bodyparser.json());
 
-app.get('api/v1/chillfellows/search/:id', (req, res) => {
-  let url = `https://api.themoviedb.org/3/discover/movie?${TMDB_API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_genres=${req.params.id}`;
+
+app.get('/api/v1/chillfellows/search/:genre', (req, res) => {
+  // console.log('inside search route');
+  let url =
+  `https://api.themoviedb.org/3/discover/movie?api_key=${TMDB_API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_genres=${req.params.genre}`;
   superagent.get(url)
     .then(result => {
-      result.body.results.map(movie =>{
+      return result.body.results.map(movie =>{
+        let { title, id, poster_path, backdrop_path, overview, vote_average } = movie;
         return {
-          id: movie.id,
-          title: movie.title,
-          poster_path: movie.poster_path,
-          backdrop_path: movie.backdrop_path,
-          overview: movie.overview,
-          vote_average: movie.vote_average
+          id: id,
+          title: title,
+          poster_path: poster_path,
+          backdrop_path: backdrop_path,
+          overview: overview,
+          vote_average: vote_average,
+          runtime: 0
         }
       })
     })
-    .then(resultarray => res.send(resultarray))
+    .then(resultarray => {
+      res.send(resultarray);
+    })
     .catch(console.error)
 })
 // app.get('api/v1/chillfellows/search/user/:id', (req, res) => {
 //
 // })
-
+app.get('/', (req, res) => {
+  res.sendFile('index.html', {root: './public'});
+});
 
 
 createTables();
 
 
 
-
+app.listen(PORT, () => console.log(`Listening on port: ${PORT}`));
 
 function createTables() {
   console.log('in create table function');

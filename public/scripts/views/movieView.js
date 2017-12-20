@@ -16,14 +16,15 @@ var app = app || {};
     }
   }
 
-  movieView.initTestPage = function () {
-    console.log('test');
+  movieView.initTestPage = function (user) {
+    // console.log('test', user);
     $('.container').hide();
     $('.personality').show();
 
-    $('#personality').on('click', function(event) {
+    $('#personality').on('click', user, function(event) {
       event.preventDefault();
-      console.log('hitting submit');
+      // console.log('hitting submit');
+
       let radioValue = '';
 
       radioValue += `${$('input[name= "ei"]:checked').val()}`;
@@ -50,19 +51,24 @@ var app = app || {};
       if (radioValue === 'istj') mb_score = 35;
 
       console.log('mb score', mb_score);
-      // app.User({mb_score: `${mb_score}`}); // ?
-      app.Movie.findGenre(mb_score, movieView.initDashboardPage(mb_score));
+      user.mb_score = mb_score;
+      console.log('user', user);// ?
+      // app.Movie.findGenre(mb_score, movieView.initDashboardPage(user));
+      movieView.initDashboardPage(user);
     });
-    // movieView.initDashboardPage(mb_score);
+    // movieView.initDashboardPage(user);
   }
 
-  movieView.initDashboardPage = function(mb_score) {
+  movieView.initDashboardPage = function(user) {
     console.log('dashboard');
     $('.container').hide();
     $('.dashboard').show();
     $('#movie-suggestions').empty();
-    console.log('app.Movie.all', app.Movie.all);
-    app.Movie.all.map(movie => $('#movie-suggestions').append(movie.toHtml))
+    console.log('user in dash', user.mb_score);
+    app.Movie.findGenre(user.mb_score)
+    // console.log('app.Movie.all', app.Movie.all);
+    // app.Movie.all.map(movie => $('#movie-suggestions').append(movie.toHtml))
+
     // console.log('movie', movie);
 
     $('.add-button').on('submit', function(event) {

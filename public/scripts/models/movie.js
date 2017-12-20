@@ -32,6 +32,8 @@ var __API_URL__ = 'http://localhost:3000';
   Movie.loadAll = rows => {
     // rows.sort((a,b) => b.title - a.title);
     Movie.all = rows.map(movieObj => new Movie(movieObj));
+    Movie.all.map(movie => $('#movie-suggestions').append(movie.toHtml));
+    console.log('movie.all', Movie.all);
   }
 
   // function to get movies from API based on genre, to be displayed on dashboard
@@ -41,7 +43,8 @@ var __API_URL__ = 'http://localhost:3000';
     $.get(`/api/v1/chillfellows/search/${genre}`)
     // .then(Movie.loadAll)
       .then(datafromsearch => Movie.loadAll(datafromsearch))
-    // .then(callback)
+      // .then(app.Movie.all.map(movie => $('#movie-suggestions').append(movie.toHtml)))
+      // .then(console.log('movie.all', app.Movie.all))
       .catch(errorCallback)
   }
 

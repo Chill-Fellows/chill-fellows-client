@@ -5,7 +5,7 @@
     <title>Chill Fellows</title>
     <!-- links to stylesheets -->
 
-    <link rel="stylesheets" href="/styles/reset.css">
+    <link rel="stylesheets" href="styles/reset.css">
 
     <!-- handlebars.js templates -->
     <script id="error-template" type="text/x-handlebars-template">
@@ -81,14 +81,14 @@
             required autocomplete="off">
             <p>Password must be 4-8 characters, numbers and lowercase letters only.</p>
           </fieldset>
-          <button id="log-in-button" type="submit">Get Started</button>
+          <button id="log-in-button" type="button">Get Started</button>
           <button id="new-user-button" type="button">New User?</button>
-          <button id="sign-up-button" type="submit">Sign Up</button>
+          <button id="sign-up-button" type="button">Sign Up</button>
         </form>
 
       </section>
 
-      <section id="personality" class="personality container">
+      <section class="personality container">
         <ol>
           <li>
             You are totally exhausted because your week was endless and less than great. How are you going to spend your weekend?
@@ -163,15 +163,17 @@
             </form>
           </li>
         </ol>
-        <button type="submit">Show Me the Movies!</button>
+        <button id="personality" type="button">Show Me the Movies!</button>
       </section>
 
       <section id="dashboard" class="dashboard container">
+        <h2>Dashboard</h2>
         <ul id="movie-suggestions">
         </ul>
       </section>
 
       <section id="watchlist" class="watchlist container">
+        <h2>Watch List</h2>
         <ul id="movie-list">
         </ul>
       </section>
@@ -189,11 +191,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
     <script src="https://cdn.rawgit.com/visionmedia/page.js/master/page.js"></script>
     <script src="scripts/models/movie.js"></script>
-    <script src="scripts/controller/routes.js"></script>
+    <!-- <script src="scripts/controller/routes.js"></script> -->
     <script src="scripts/models/user.js"></script>
     <script src="scripts/views/errorView.js"></script>
     <script src="scripts/views/loginView.js"></script>
-    <!-- <script src="scripts/models/movieView.js"></script> -->
+    <script src="scripts/views/movieView.js"></script>
 
   </body>
 </html>

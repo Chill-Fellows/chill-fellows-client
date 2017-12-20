@@ -19,7 +19,7 @@ var app = app || {};
     loginView.initSignUpPage();
    })
 
-   $('#log-in-button').on('submit', function(event) {
+   $('#log-in-button').on('click', function(event) {
      event.preventDefault();
 
      let user = {
@@ -38,7 +38,7 @@ var app = app || {};
    $('#sign-up-button').show();
    $('.sign-up').show();
 
-   $('#sign-up-button').on('submit', function(event) {
+   $('#sign-up-button').on('click', function(event) {
      event.preventDefault();
 
      let user = new app.User({
@@ -48,6 +48,7 @@ var app = app || {};
        password: $('#password').val(),
        mb_score: ''
      })
+     app.movieView.initTestPage();
    })
  }
 

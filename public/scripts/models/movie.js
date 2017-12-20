@@ -13,12 +13,15 @@ var __API_URL__ = 'http://localhost:3000';
 
   // constructor function to create movie objects
   function Movie(movieObj) {
+    // console.log('each movie', movieObj);
     Object.keys(movieObj).forEach(key => this[key] = movieObj[key]);
   }
 
   // prototype method to display movie list to html via handlebars template
   Movie.prototype.toHtml = function() {
     let template = Handlebars.compile($('#dashboard-template').text());
+    console.log('this tohtml', this);
+    console.log('template to html', template);
     return template(this);
   }
 

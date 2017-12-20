@@ -20,43 +20,50 @@ var app = app || {};
     console.log('test');
     $('.container').hide();
     $('.personality').show();
-    $('#personality').on('submit', function(event) {
+
+    $('#personality').on('click', function(event) {
       event.preventDefault();
+      console.log('hitting submit');
+      let radioValue = '';
 
-      let radioValue = [];
+      radioValue += `${$('input[name= "ei"]:checked').val()}`;
+      radioValue += `${$('input[name= "sn"]:checked').val()}`;
+      radioValue += `${$('input[name= "tf"]:checked').val()}`;
+      radioValue += `${$('input[name= "jp"]:checked').val()}`;
+      console.log('radioValue', radioValue);
 
-      radioValue.push($('input[name= "ei"]:checked').val());
-      radioValue.push($('input[name= "sn"]:checked').val());
-      radioValue.push($('input[name= "tf"]:checked').val());          radioValue.push($('input[name= "jp"]:checked').val());
+      if (radioValue === 'estj') mb_score = 36;
+      if (radioValue === 'entj') mb_score = 10752;
+      if (radioValue === 'esfj') mb_score = 99;
+      if (radioValue === 'estp') mb_score = 37;
+      if (radioValue === 'enfj') mb_score = 53;
+      if (radioValue === 'entp') mb_score = 878;
+      if (radioValue === 'esfp') mb_score = 80;
+      if (radioValue === 'enfp') mb_score = 27;
+      if (radioValue === 'infp') mb_score = 10749;
+      if (radioValue === 'isfp') mb_score = 10402;
+      if (radioValue === 'intp') mb_score = 9648;
+      if (radioValue === 'infj') mb_score = 18;
+      if (radioValue === 'intj') mb_score = 12;
+      if (radioValue === 'isfj') mb_score = 14;
+      if (radioValue === 'istp') mb_score = 28;
+      if (radioValue === 'istj') mb_score = 35;
 
-      if (radioValue = ['e', 's', 't', 'j']) mb_score = 36;
-      if (radioValue = ['e', 'n', 't', 'j']) mb_score = 10752;
-      if (radioValue = ['e', 's', 'f', 'j']) mb_score = 99;
-      if (radioValue = ['e', 's', 't', 'p']) mb_score = 37;
-      if (radioValue = ['e', 'n', 'f', 'j']) mb_score = 53;
-      if (radioValue = ['e', 'n', 't', 'p']) mb_score = 878;
-      if (radioValue = ['e', 's', 'f', 'p']) mb_score = 80;
-      if (radioValue = ['e', 'n', 'f', 'p']) mb_score = 27;
-      if (radioValue = ['i', 'n', 'f', 'p']) mb_score = 10749;
-      if (radioValue = ['i', 's', 'f', 'p']) mb_score = 10402;
-      if (radioValue = ['i', 'n', 't', 'p']) mb_score = 9648;
-      if (radioValue = ['i', 'n', 'f', 'j']) mb_score = 18;
-      if (radioValue = ['i', 'n', 't', 'j']) mb_score = 12;
-      if (radioValue = ['i', 's', 'f', 'j']) mb_score = 14;
-      if (radioValue = ['i', 's', 't', 'p']) mb_score = 28;
-      if (radioValue = ['i', 's', 't', 'j']) mb_score = 35;
-
-      app.User({mb_score: `${mb_score}`}); // ?
-      app.Movie.findGenre(mb_score, movieView.initDashboardPage);
+      console.log('mb score', mb_score);
+      // app.User({mb_score: `${mb_score}`}); // ?
+      app.Movie.findGenre(mb_score, movieView.initDashboardPage(mb_score));
     });
     // movieView.initDashboardPage(mb_score);
   }
 
-  movieView.initDashboardPage = function() {
+  movieView.initDashboardPage = function(mb_score) {
+    console.log('dashboard');
     $('.container').hide();
     $('.dashboard').show();
-    $('.dashboard').empty();
+    $('#movie-suggestions').empty();
+    console.log('app.Movie.all', app.Movie.all);
     app.Movie.all.map(movie => $('#movie-suggestions').append(movie.toHtml))
+    // console.log('movie', movie);
 
     $('.add-button').on('submit', function(event) {
       app.Movie.addOne($(this).parent().parent().data('movieid'))
@@ -67,7 +74,7 @@ var app = app || {};
   movieView.initWatchlistPage = (ctx) => {
      console.log('watchlist');
      $('.container').hide();
-     $('.watchlist container').show();
+     $('.watchlist').show();
      $('#movie-list').empty;
      app.Movie.loadAll(ctx);
      let template = Handlebars.compile($('#watchlist-template').text());
@@ -88,3 +95,7 @@ var app = app || {};
   module.movieView = movieView;
 
 })(app)
+
+$(document).ready(function() {
+  app.movieView.initIndexPage();
+})

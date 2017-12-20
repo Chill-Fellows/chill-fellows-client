@@ -19,9 +19,8 @@ var __API_URL__ = 'http://localhost:3000';
 
   // prototype method to display movie list to html via handlebars template
   Movie.prototype.toHtml = function() {
+
     let template = Handlebars.compile($('#dashboard-template').text());
-    console.log('this tohtml', this);
-    console.log('template to html', template);
     return template(this);
   }
 
@@ -32,8 +31,10 @@ var __API_URL__ = 'http://localhost:3000';
   Movie.loadAll = rows => {
     // rows.sort((a,b) => b.title - a.title);
     Movie.all = rows.map(movieObj => new Movie(movieObj));
-    Movie.all.map(movie => $('#movie-suggestions').append(movie.toHtml));
-    console.log('movie.all', Movie.all);
+    Movie.all.map(movie => {
+
+      $('#movie-suggestions').append(movie.toHtml());
+    })
   }
 
   // function to get movies from API based on genre, to be displayed on dashboard

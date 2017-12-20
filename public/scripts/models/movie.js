@@ -39,12 +39,12 @@ var __API_URL__ = 'http://localhost:3000';
 
   Movie.loadWatchList = rows => {
     movie.all = rows.map(movieObj => new Movie(movieObj));
-    })
-  }
+    }
+  
 
   // function to get movies from API based on genre, to be displayed on dashboard
   // remember to change fn call so that it takes the ctx from form.
-  Movie.findGenre = (genre) => {
+  Movie.findGenre = genre => {
     console.log('genre', genre);
     $.get(`/api/v1/chillfellows/search/${genre}`)
     // .then(Movie.loadAll)
@@ -105,5 +105,3 @@ var __API_URL__ = 'http://localhost:3000';
   module.Movie = Movie;
 
 }) (app);
-
-//api/v1/chillfellows/search/:id

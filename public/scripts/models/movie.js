@@ -19,9 +19,8 @@ var __API_URL__ = 'http://localhost:3000';
 
   // prototype method to display movie list to html via handlebars template
   Movie.prototype.toHtml = function() {
+
     let template = Handlebars.compile($('#dashboard-template').text());
-    console.log('this tohtml', this);
-    console.log('template to html', template);
     return template(this);
   }
 
@@ -32,6 +31,15 @@ var __API_URL__ = 'http://localhost:3000';
   Movie.loadAll = rows => {
     // rows.sort((a,b) => b.title - a.title);
     Movie.all = rows.map(movieObj => new Movie(movieObj));
+    Movie.all.map(movie => {
+
+      $('#movie-suggestions').append(movie.toHtml());
+    })
+  }
+
+  Movie.loadWatchList = rows => {
+    movie.all = rows.map(movieObj => new Movie(movieObj));
+    })
   }
 
   // function to get movies from API based on genre, to be displayed on dashboard
@@ -41,7 +49,8 @@ var __API_URL__ = 'http://localhost:3000';
     $.get(`/api/v1/chillfellows/search/${genre}`)
     // .then(Movie.loadAll)
       .then(datafromsearch => Movie.loadAll(datafromsearch))
-    // .then(callback)
+      // .then(app.Movie.all.map(movie => $('#movie-suggestions').append(movie.toHtml)))
+      // .then(console.log('movie.all', app.Movie.all))
       .catch(errorCallback)
   }
 
@@ -53,6 +62,13 @@ var __API_URL__ = 'http://localhost:3000';
     // .then(() => page('/'))
       .catch(errorCallback);
   }
+
+  Movie.getWatchList = movie => {
+    $.get(`${__API_URL__}/api/v1/chillfellows`, movies)
+    .then(dataFromWatchlist => Movie.loadWatchList(dataFromWatchlist))
+    .catch (errorCallback);
+  }
+
 // deletes movie from watchlist
   Movie.delete = id => {
     $.ajax({
@@ -65,12 +81,12 @@ var __API_URL__ = 'http://localhost:3000';
 
 
 
-// gets movie info from api to add to user's watchlist table
-  Movie.addOne = movie => {
-    $.get(`${__API_URL__}/api/v1/chillfellows/search/${movie.id}`)
-      .then(Movie.addToDB)
-      .catch(errorCallback);
-  }
+// // gets movie info from api to add to user's watchlist table
+//   Movie.addOne = movie => {
+//     $.get(`${__API_URL__}/api/v1/chillfellows/search/${movie.id}`) //needs to be a put
+//       .then(Movie.addToDB)
+//       .catch(errorCallback);
+//   }
 
 // // adds movie to user's watchlist table
 //   Movie.create = movie => {
@@ -89,5 +105,3 @@ var __API_URL__ = 'http://localhost:3000';
   module.Movie = Movie;
 
 }) (app);
-
-//api/v1/chillfellows/search/:id

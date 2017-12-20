@@ -16,14 +16,15 @@ var app = app || {};
     }
   }
 
-  movieView.initTestPage = function () {
-    console.log('test');
+  movieView.initTestPage = function (user) {
+    // console.log('test', user);
     $('.container').hide();
     $('.personality').show();
 
-    $('#personality').on('click', function(event) {
+    $('#personality').on('click', user, function(event) {
       event.preventDefault();
-      console.log('hitting submit');
+      // console.log('hitting submit');
+
       let radioValue = '';
 
       radioValue += `${$('input[name= "ei"]:checked').val()}`;
@@ -48,35 +49,49 @@ var app = app || {};
       if (radioValue === 'isfj') mb_score = 14;
       if (radioValue === 'istp') mb_score = 28;
       if (radioValue === 'istj') mb_score = 35;
+      if (radioValue.split('').length != 4) {
+        alert('you must answer all questions');
+        movieView.initTestPage();
+        return
+      }
 
       console.log('mb score', mb_score);
-      // app.User({mb_score: `${mb_score}`}); // ?
-      app.Movie.findGenre(mb_score, movieView.initDashboardPage(mb_score));
+      user.mb_score = mb_score;
+      console.log('user', user);// ?
+      // app.Movie.findGenre(mb_score, movieView.initDashboardPage(user));
+      movieView.initDashboardPage(user);
     });
-    // movieView.initDashboardPage(mb_score);
+    // movieView.initDashboardPage(user);
   }
 
-  movieView.initDashboardPage = function(mb_score) {
+  movieView.initDashboardPage = function(user) {
     console.log('dashboard');
     $('.container').hide();
     $('.dashboard').show();
     $('#movie-suggestions').empty();
-    console.log('app.Movie.all', app.Movie.all);
-    app.Movie.all.map(movie => $('#movie-suggestions').append(movie.toHtml))
+    console.log('user in dash', user.mb_score);
+    app.Movie.findGenre(user.mb_score)
+    // console.log('app.Movie.all', app.Movie.all);
+    // app.Movie.all.map(movie => $('#movie-suggestions').append(movie.toHtml))
+
     // console.log('movie', movie);
 
-    $('.add-button').on('submit', function(event) {
-      app.Movie.addOne($(this).parent().parent().data('movieid'))
+    $('.add-button').on('click', function(event) {
+      app.Movie.addToDB($(this).parent().parent().data('movieid'))
+    });
+
+    $('#go-to-watch').on('click', function(event) {
+      movieView.initWatchlistPage();
     })
   }
 
   //this function will show the list of movies the user has selected for future viewing
-  movieView.initWatchlistPage = (ctx) => {
+  movieView.initWatchlistPage = () => {
      console.log('watchlist');
      $('.container').hide();
      $('.watchlist').show();
      $('#movie-list').empty;
-     app.Movie.loadAll(ctx);
+     app.Movie.loadWatchList();
      let template = Handlebars.compile($('#watchlist-template').text());
      $('#movie-list').append(template(ctx.movie));
 

@@ -66,11 +66,12 @@ var app = app || {};
 
   movieView.initDashboardPage = function(user) {
     console.log('dashboard');
+    console.log('user in dashboard', user);
     $('.container').hide();
     $('.dashboard').show();
     $('#movie-suggestions').empty();
-    console.log('user in dash', user.mb_score);
-    app.Movie.findGenre(user.mb_score)
+    console.log('user mb_score', user.mb_score);
+    app.Movie.findGenre(user.mb_score);
     // console.log('app.Movie.all', app.Movie.all);
     // app.Movie.all.map(movie => $('#movie-suggestions').append(movie.toHtml))
 

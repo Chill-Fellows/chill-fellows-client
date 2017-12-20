@@ -12,24 +12,24 @@ var app = app || {};
  loginView.initLoginPage = function() {
    $('.container').hide();
    $('.log-in').show();
-   $('#sign-up-button').hide(;)
+   $('#sign-up-button').hide();
 
    $('#new-user-button').on('click', function(event) {
      event.preventDefault();
     loginView.initSignUpPage();
    })
 
-   $('#log-in-button').on('submit', function(event)) {
+   $('#log-in-button').on('submit', function(event) {
      event.preventDefault();
 
      let user = {
-       username: $('#username').val();
-       password: $('#password').val();
+       username: $('#username').val(),
+       password: $('#password').val(),
      }
      User.validate(user);
      localStorage.username = user.username;
      app.movieView.initWatchlistPage();
-   }
+   })
  }
 
  loginView.initSignUpPage = function() {

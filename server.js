@@ -25,7 +25,7 @@ app.use(express.static('./public'));
 app.use(bodyparser.urlencoded({ extended: true }));
 app.use(bodyparser.json());
 
-
+// This get request is for a list of movies by genre from the movie db
 app.get('/api/v1/chillfellows/search/:genre', (req, res) => {
   // console.log('inside search route');
   let url =
@@ -52,9 +52,14 @@ app.get('/api/v1/chillfellows/search/:genre', (req, res) => {
 })
 
 
-app.get('api/v1/chillfellows/user/username/:username', (req, res) => {
-  client.query(`SELECT * FROM user WHERE username=${req.params.username} LIMIT ONE;`)
-    .then(rows => res.send(rows))
+
+app.get('/api/v1/chillfellows/user/username/:username', (req, res) => {
+  console.log('inside get one by user', req.params.username);
+  client.query(`SELECT DISTINCT first_name, last_name, mb_score, password, username FROM users WHERE username='${req.params.username}';`)
+    .then(result => {
+      // console.log('return from sql request one user',result);
+      res.send(result);
+    })
     .catch(error => console.error(error))
 })
 
@@ -73,14 +78,15 @@ app.post('/api/v1/chillfellows/newuser/', (req, res) => {
 })
 
 app.put('/api/v1/chillfellows/update/:id', (req, res) => {
-  client.query(`UPDATE users SET first_name=$1, last_name=$2, mb_score=$3, username=4$ password=$5 WHERE user_id=$6`, [
+  console.log('inside update');
+  client.query(`UPDATE users SET first_name=$1, last_name=$2, mb_score=$3, password=$4 WHERE username=$5`, [
     req.body.first_name,
     req.body.last_name,
     req.body.mb_score,
-    req.body.username,
-    req.body.password
+    req.body.password,
+    req.params.id
   ])
-    .then(res => res.send('user updated'))
+    .then(res.send('user updated'))
 })
 
 app.get('/', (req, res) => {

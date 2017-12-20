@@ -71,11 +71,12 @@ var app = app || {};
   }
 
   //this function will show the list of movies the user has selected for future viewing
-  movieView.initWatchlistPage = (ctx) => {
+  movieView.initWatchlistPage = () => {
      console.log('watchlist');
      $('.container').hide();
      $('.watchlist').show();
      $('#movie-list').empty;
+     
      app.Movie.loadAll(ctx);
      let template = Handlebars.compile($('#watchlist-template').text());
      $('#movie-list').append(template(ctx.movie));

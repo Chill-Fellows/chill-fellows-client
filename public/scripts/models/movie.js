@@ -13,6 +13,7 @@ var __API_URL__ = 'http://localhost:3000';
 
   // constructor function to create movie objects
   function Movie(movieObj) {
+    console.log('each movie', movieObj);
     Object.keys(movieObj).forEach(key => this[key] = movieObj[key]);
   }
 

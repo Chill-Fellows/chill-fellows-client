@@ -20,9 +20,10 @@ var app = app || {};
     console.log('test');
     $('.container').hide();
     $('.personality').show();
+    
     $('#personality').on('submit', function(event) {
       event.preventDefault();
-
+      console.log('hitting submit');
       let radioValue = [];
 
       radioValue.push($('input[name= "ei"]:checked').val());
@@ -46,6 +47,7 @@ var app = app || {};
       if (radioValue = ['i', 's', 't', 'p']) mb_score = 28;
       if (radioValue = ['i', 's', 't', 'j']) mb_score = 35;
 
+      console.log('mb score', mb_score);
       app.User({mb_score: `${mb_score}`}); // ?
       app.Movie.findGenre(mb_score, movieView.initDashboardPage);
     });
@@ -53,9 +55,10 @@ var app = app || {};
   }
 
   movieView.initDashboardPage = function() {
+    console.log('dashboard');
     $('.container').hide();
     $('.dashboard').show();
-    $('.dashboard').empty();
+    $('#movie-suggestions').empty();
     app.Movie.all.map(movie => $('#movie-suggestions').append(movie.toHtml))
 
     $('.add-button').on('submit', function(event) {
@@ -67,7 +70,7 @@ var app = app || {};
   movieView.initWatchlistPage = (ctx) => {
      console.log('watchlist');
      $('.container').hide();
-     $('.watchlist container').show();
+     $('.watchlist').show();
      $('#movie-list').empty;
      app.Movie.loadAll(ctx);
      let template = Handlebars.compile($('#watchlist-template').text());
@@ -88,3 +91,7 @@ var app = app || {};
   module.movieView = movieView;
 
 })(app)
+
+$(document).ready(function() {
+  app.movieView.initIndexPage();
+})

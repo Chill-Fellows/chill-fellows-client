@@ -37,6 +37,11 @@ var __API_URL__ = 'http://localhost:3000';
     })
   }
 
+  Movie.loadWatchList = rows => {
+    movie.all = rows.map(movieObj => new Movie(movieObj));
+    })
+  }
+
   // function to get movies from API based on genre, to be displayed on dashboard
   // remember to change fn call so that it takes the ctx from form.
   Movie.findGenre = (genre) => {
@@ -57,6 +62,13 @@ var __API_URL__ = 'http://localhost:3000';
     // .then(() => page('/'))
       .catch(errorCallback);
   }
+
+  Movie.getWatchList = movie => {
+    $.get(`${__API_URL__}/api/v1/chillfellows`, movies)
+    .then(dataFromWatchlist => Movie.loadWatchList(dataFromWatchlist))
+    .catch (errorCallback);
+  }
+
 // deletes movie from watchlist
   Movie.delete = id => {
     $.ajax({
@@ -69,12 +81,12 @@ var __API_URL__ = 'http://localhost:3000';
 
 
 
-// gets movie info from api to add to user's watchlist table
-  Movie.addOne = movie => {
-    $.get(`${__API_URL__}/api/v1/chillfellows/search/${movie.id}`)
-      .then(Movie.addToDB)
-      .catch(errorCallback);
-  }
+// // gets movie info from api to add to user's watchlist table
+//   Movie.addOne = movie => {
+//     $.get(`${__API_URL__}/api/v1/chillfellows/search/${movie.id}`) //needs to be a put
+//       .then(Movie.addToDB)
+//       .catch(errorCallback);
+//   }
 
 // // adds movie to user's watchlist table
 //   Movie.create = movie => {

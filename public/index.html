@@ -4,8 +4,11 @@
     <meta charset="utf-8">
     <title>Chill Fellows</title>
     <!-- links to stylesheets -->
-
-    <!-- <link rel="stylesheet" href="styles/reset.css"> -->
+    <link href="https://fonts.googleapis.com/css?family=Courgette" rel="stylesheet">
+    <link rel="stylesheet" href="styles/reset.css">
+    <link rel="stylesheet" href="styles/base.css">
+    <link rel="stylesheet" href="styles/layout.css">
+    <link rel="stylesheet" href="styles/module.css">
 
     <!-- handlebars.js templates -->
     <script id="error-template" type="text/x-handlebars-template">
@@ -167,11 +170,13 @@
             </form>
           </li>
         </ol>
-        <button id="personality" type="button">Show Me the Movies!</button>
+        <div id="show-button">
+          <button id="personality" type="button">Show Me the Movies!</button>
+        </div>
       </section>
 
       <section id="dashboard" class="dashboard container">
-        <h2>Dashboard</h2>
+        <h2>Our Suggestions</h2>
         <div id="movie-suggestions">
         </div>
       </section>

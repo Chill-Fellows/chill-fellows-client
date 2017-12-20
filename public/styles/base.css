@@ -1,0 +1,13 @@
+body {
+  margin: 0 auto;
+  font-family: helvetica;
+}
+
+main {
+  /* clear: both; */
+}
+
+footer {
+  background-image: url(../img/footer-image2.jpg);
+  background-color: #444;
+}

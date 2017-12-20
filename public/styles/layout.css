@@ -1,0 +1,73 @@
+header {
+  background-color: #333;
+  color: #01d277;
+}
+
+nav li{
+  /* float: right; */
+}
+
+h1 {
+  margin-top: 50px;
+  text-align: center;
+  font-size: 40px;
+  font-family: 'Courgette', cursive;
+}
+
+#log-in {
+  margin-top: 50px;
+  text-align: center;
+  line-height: 2;
+  font-size: 20px;
+}
+
+#log-in input {
+  width: 40%;
+  height: 27px;
+}
+
+fieldset p {
+  font-size: 8px;
+}
+
+.personality {
+  margin-top: 50px;
+}
+
+.personality ol li {
+  border-bottom: thin solid #444;
+  line-height: 1.5;
+  margin-top: 50px;
+  margin-left: 10%;
+  padding-bottom: 30px;
+  width: 75%;
+  font-size: 25px;
+}
+
+.personality form {
+  font-size: 17px;
+  color: #0089bf;
+}
+
+#show-button {
+  text-align: center;
+}
+
+#show-button button {
+  margin-top: 10px;
+  height: 60px;
+  margin-bottom: 50px;
+}
+
+#dashboard {
+  margin-top: 50px;
+  text-align: center;
+}
+
+#movie-suggestions img {
+  width: 30%;
+}
+
+.movie-items {
+  margin-bottom: 50px;
+}

@@ -92,7 +92,12 @@ var app = app || {};
      $('.container').hide();
      $('.watchlist').show();
      $('#movie-list').empty;
+
+     
+     app.Movie.loadAll(ctx);
+
      app.Movie.loadWatchList();
+
      let template = Handlebars.compile($('#watchlist-template').text());
      $('#movie-list').append(template(ctx.movie));
 

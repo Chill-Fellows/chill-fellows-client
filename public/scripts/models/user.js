@@ -25,7 +25,7 @@ var __API_URL__ = 'http://localhost:3000';
       .catch(errorCallback);
   }
 
-  user.update = genre => {
+  User.update = genre => {
     $.put(`${__API_URL__}/api/v1/chillfellows/:id`, genre)
       .then(() => page('/dashboard'))
       .catch(errorCallback);

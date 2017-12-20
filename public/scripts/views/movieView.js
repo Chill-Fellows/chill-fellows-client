@@ -20,14 +20,14 @@ var app = app || {};
     console.log('test');
     $('.container').hide();
     $('.personality').show();
-    $('#personality').on('submit', function(event)) {
+    $('#personality').on('submit', function(event) {
       event.preventDefault();
 
       let radioValue = [];
 
-      radioValue.push($('input[name= "ei"]:checked'.val());
-      radioValue.push($('input[name= "sn"]:checked'.val());
-      radioValue.push($('input[name= "tf"]:checked'.val());          radioValue.push($('input[name= "jp"]:checked'.val());
+      radioValue.push($('input[name= "ei"]:checked').val());
+      radioValue.push($('input[name= "sn"]:checked').val());
+      radioValue.push($('input[name= "tf"]:checked').val());          radioValue.push($('input[name= "jp"]:checked').val());
 
       if (radioValue = ['e', 's', 't', 'j']) mb_score = 36;
       if (radioValue = ['e', 'n', 't', 'j']) mb_score = 10752;
@@ -47,9 +47,8 @@ var app = app || {};
       if (radioValue = ['i', 's', 't', 'j']) mb_score = 35;
 
       app.User({mb_score: `${mb_score}`}); // ?
-      app.Movie.findGenre(mb_score, movieView.initDashboardPage));
-    };
-
+      app.Movie.findGenre(mb_score, movieView.initDashboardPage);
+    });
     // movieView.initDashboardPage(mb_score);
   }
 

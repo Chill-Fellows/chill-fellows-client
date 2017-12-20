@@ -50,9 +50,39 @@ app.get('/api/v1/chillfellows/search/:genre', (req, res) => {
     })
     .catch(console.error)
 })
-// app.get('api/v1/chillfellows/search/user/:id', (req, res) => {
-//
-// })
+
+
+app.get('api/v1/chillfellows/user/username/:username', (req, res) => {
+  client.query(`SELECT * FROM user WHERE username=${req.params.username} LIMIT ONE;`)
+    .then(rows => res.send(rows))
+    .catch(error => console.error(error))
+})
+
+app.post('/api/v1/chillfellows/newuser/', (req, res) => {
+  client.query(`INSERT INTO users (first_name, last_name, mb_score, username, password)
+  VALUES ($1, $2, $3, $4, $5) ON CONFLICT DO NOTHING;`,
+    [
+      req.body.first_name,
+      req.body.last_name,
+      req.body.mb_score,
+      req.body.username,
+      req.body.password
+    ]
+  )
+    .then(res.send('insert complete'))
+})
+
+app.put('/api/v1/chillfellows/update/:id', (req, res) => {
+  client.query(`UPDATE users SET first_name=$1, last_name=$2, mb_score=$3, username=4$ password=$5 WHERE user_id=$6`, [
+    req.body.first_name,
+    req.body.last_name,
+    req.body.mb_score,
+    req.body.username,
+    req.body.password
+  ])
+    .then(res => res.send('user updated'))
+})
+
 app.get('/', (req, res) => {
   res.sendFile('index.html', {root: './public'});
 });

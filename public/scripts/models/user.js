@@ -15,7 +15,7 @@ var __API_URL__ = 'http://localhost:3000';
   User.create = function(user) {
     $.post(`${__API_URL__}/api/v1/chillfellows/newuser/`, user) //check filepath for usertable
       .then(response => console.log('this is back from creting user',response))
-      .then(response => $.get(`${__API_URL__}/api/v1/chillfellows/user/username/${user.username}`))
+      .then(response =>  $.get(`${__API_URL__}/api/v1/chillfellows/user/username/${user.username}`))
       .then(response => {
         console.log('inside user.create sending this to localstorage',response);
         localStorage.user_id = JSON.stringify(response.rows[0].user_id);

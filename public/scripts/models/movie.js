@@ -51,7 +51,13 @@ var __API_URL__ = 'http://localhost:3000';
     Movie.all = rows.map(movieObj => new Movie(movieObj));
     Movie.all.map(movie => {
       $('#movie-list').append(movie.toWatchlist());
-    })
+    });
+
+    $('#delete-button').on('click', function(event) {
+      event.preventDefault();
+      app.Movie.delete($(this).data('id'));
+      // $(this).data('id').hide();
+    });
   }
 
 
@@ -99,7 +105,10 @@ var __API_URL__ = 'http://localhost:3000';
       url: `${__API_URL__}/api/v1/chillfellow/deletemovie/${id}`,
       method: 'DELETE'
     })
-      .then(console.log)
+      .then(result => {
+        console.log(result);
+        app.movieView.initWatchlistPage())
+      }
       .catch(errorCallback);
   }
 

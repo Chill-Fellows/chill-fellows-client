@@ -4,9 +4,9 @@ var app = app || {};
 
 // This function runs when there is a new user or when the user needs to log in
 (function (module) {
- const loginView = {};
- let username;
- let password;
+  const loginView = {};
+  let username;
+  let password;
 
 
  loginView.initLoginPage = function() {
@@ -19,15 +19,15 @@ var app = app || {};
     loginView.initSignUpPage();
    })
 
-   $('#log-in-button').on('submit', function(event) {
+   $('#log-in-button').on('click', function(event) {
      event.preventDefault();
 
      let user = {
        username: $('#username').val(),
        password: $('#password').val(),
      }
-     User.validate(user);
-     localStorage.username = user.username;
+     app.User.validate(user);
+     // localStorage.username = user.username;
      app.movieView.initWatchlistPage();
    })
  }
@@ -38,7 +38,7 @@ var app = app || {};
    $('#sign-up-button').show();
    $('.sign-up').show();
 
-   $('#sign-up-button').on('submit', function(event) {
+   $('#sign-up-button').on('click', function(event) {
      event.preventDefault();
 
      let user = new app.User({
@@ -48,6 +48,9 @@ var app = app || {};
        password: $('#password').val(),
        mb_score: ''
      })
+     app.User.validate(user);
+     console.log('user sign up', user);
+     // app.movieView.initTestPage(user);
    })
  }
 

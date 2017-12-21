@@ -16,9 +16,11 @@ let handleNav = () => {
   })
 
   $('#retest').on('click', function() {
-    let user = app.User.getOne(JSON.stringify(localStorage.username));
-    console.log('logged in user', user);
-    app.movieView.initTestPage(user);
+    // let user = app.User.getOne(JSON.stringify(localStorage.username));
+    $.get(`${__API_URL__}/api/v1/chillfellows/user/username/${username}`)
+    .then(user => app.movieView.initTestPage(user))
+    
+
   })
 }
 

@@ -3,7 +3,7 @@
 
 let handleNav = () => {
   $('.hamburger').on('click', function() {
-    $('nav ul').toggle();
+    $('nav ul').fadeToggle(400);
   });
 
   $('#logout').on('click', function() {
@@ -19,8 +19,11 @@ let handleNav = () => {
     // let user = app.User.getOne(JSON.stringify(localStorage.username));
     $.get(`${__API_URL__}/api/v1/chillfellows/user/username/${username}`)
     .then(user => app.movieView.initTestPage(user))
-    
+  })
 
+  $('#about').on('click', function() {
+    $('.container').hide();
+    $('.about-us').show();
   })
 }
 

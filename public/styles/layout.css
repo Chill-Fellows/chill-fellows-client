@@ -94,3 +94,32 @@ fieldset p {
   width: 15%;
   margin-top: 100px;
 }
+
+.about-us {
+  margin-top: 50px;
+  text-align: center;
+}
+
+.about-us h2 {
+  font-size: 40px;
+}
+
+.about-us h4 {
+  font-size: 30px;
+  font-family: 'Courgette', cursive;
+}
+.about-us p {
+  line-height: 1.5;
+  color: #0089bf;
+}
+
+.about-us li {
+  float: left;
+  margin-top: 30px;
+  margin-bottom: 50px;
+  width: 30%;
+}
+
+.about-us li:first-child {
+  margin-left: 30px;
+}

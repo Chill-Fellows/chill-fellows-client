@@ -1,0 +1,38 @@
+button {
+  border-radius: 12px;
+  border: none;
+  /* width: 25%; */
+  height: 30px;
+  background-color: #01d277;
+  color: #081c24;
+  font-size: 15px;
+}
+
+button:hover {
+  background-color: #081c24;
+  color: #01d277;
+}
+
+
+.hamburger {
+  margin-top: 20px;
+}
+
+.hamburger div {
+  width: 50px;
+  height: 8px;
+  background-color: #01d277;
+  margin: 10px 92%;
+}
+
+nav ul {
+  display: none;
+  font-size: 25px;
+  line-height: 2;
+}
+
+nav li {
+  border-bottom: 1px #01d277;
+  float: left;
+  margin-left: 10%;
+}

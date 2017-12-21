@@ -10,26 +10,64 @@ var __API_URL__ = 'http://localhost:3000';
     Object.keys(userObj).forEach(key => this[key] = userObj[key]);
   }
 
-  User.all = [];
 
-  User.create = user => {
-    $.post(`${__API_URL__}/api/v1/chillfellows`, user) //check filepath for usertable
-      .then(console.log)
-      // .then(() => testpage init)
-      .catch(errorCallback);
+
+  User.create = function(user) {
+    $.post(`${__API_URL__}/api/v1/chillfellows/newuser/`, user) //check filepath for usertable
+      .then(response => console.log('this is back from creting user',response))
+      .then(response => $.get(`${__API_URL__}/api/v1/chillfellows/user/username/${user.username}`))
+      .then(response => {
+        console.log('inside user.create sending this to localstorage',response);
+        localStorage.user_id = JSON.stringify(response.rows[0].user_id);
+        localStorage.username = JSON.stringify(response.rows[0].username);
+      })
+      .catch(app.errorCallback);
   }
 
-  User.validate = user => {
-    $.get(`${__API_URL__}/api/v1/chillfellows/:id`, user) //check filepath for user table
-      .then(Movie.loadAll)
-      .catch(errorCallback);
+  User.getOne = function(username) {
+    console.log('inside usergetone');
+
+    $.get(`${__API_URL__}/api/v1/chillfellows/user/username/${username}`)
+      .then(response => {
+        console.log('response from get one',response.rows[0]);
+        return response.rows[0];
+
+      })
   }
 
-  User.update = genre => {
-    $.put(`${__API_URL__}/api/v1/chillfellows/:id`, genre)
-      .then(() => page('/dashboard'))
-      .catch(errorCallback);
+  User.validate = function(user) {
+    console.log('user password', user.password);
+
+    $.get(`${__API_URL__}/api/v1/chillfellows/user/username/${user.username}`)
+      .then(response => {
+        if (response.rows.length === 0) {
+          User.create(user);
+          app.movieView.initTestPage(user);
+        }
+        if (response.rows[0].password === user.password){
+          console.log('in else if');
+          console.log('username', user.username);
+          localStorage.username = JSON.stringify(user.username);
+          localStorage.user_id = JSON.stringify(response.rows[0].user_id);
+          app.movieView.initWatchlistPage();
+        }
+      })
+      .catch(app.errorCallback);
   }
+
+
+
+  User.update = function(userObj) {
+    $.ajax({
+      url: `${__API_URL__}/api/v1/chillfellows/update/${userObj.username}`,
+      method: 'PUT',
+      data: userObj
+    })
+      .then(response => console.log(response))
+      .catch(app.errorCallback);
+  }
+
+
 
   module.User = User;
 }) (app);

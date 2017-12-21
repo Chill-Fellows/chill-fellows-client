@@ -4,8 +4,11 @@
     <meta charset="utf-8">
     <title>Chill Fellows</title>
     <!-- links to stylesheets -->
-
-    <link rel="stylesheets" href="/styles/reset.css">
+    <link href="https://fonts.googleapis.com/css?family=Courgette" rel="stylesheet">
+    <link rel="stylesheet" href="styles/reset.css">
+    <link rel="stylesheet" href="styles/base.css">
+    <link rel="stylesheet" href="styles/layout.css">
+    <link rel="stylesheet" href="styles/module.css">
 
     <!-- handlebars.js templates -->
     <script id="error-template" type="text/x-handlebars-template">
@@ -14,25 +17,29 @@
     </script>
 
     <script id="dashboard-template" type="text/x-handlebars-template">
-      <li class="movie-items" data-movieid={{id}}>
-          <img src={{poster_path}}>
-          <div class="movie-overlay">
-            <h3>{{title}}</h3>
-            <button type="submit" class="add-button">Add to Watch List</button>
-          </div>
-      </li>
+      <ul>
+        <li class="movie-items" data-movieid={{id}}>
+            <img src="https://image.tmdb.org/t/p/w500/{{poster_path}}">
+            <div class="movie-overlay">
+              <h3>{{title}}</h3>
+              <button class="add-button">Add to Watch List</button>
+            </div>
+        </li>
+      </ul>
     </script>
 
     <script id="watchlist-template" type="text/x-handlebars-template">
-      <li class="movie-items" data-movieid={{movie_id}}>
-          <img src={{poster_path}}>
-          <div class="movie-overlay">
-            <h3>{{title}}</h3>
-            <!-- <p>{{overview}}</p> -->
-            <button class="delete-button">Remove from Watch List</button>
-            <button class="test-button">New Movie Recommendations</button>
-          </div>
-      </li>
+      <ul>
+        <li class="movie-items" data-movieid={{movie_id}}>
+            <img src="https://image.tmdb.org/t/p/w500/{{poster_path}}">
+            <div class="movie-overlay">
+              <h3>{{movie_name}}</h3>
+              <!-- <p>{{overview}}</p> -->
+              <button class="delete-button">Remove from Watch List</button>
+              <!-- <button class="test-button">New Movie Recommendations</button> -->
+            </div>
+        </li>
+      </ul>
     </script>
 
   </head>
@@ -42,10 +49,17 @@
       <!-- main navigation -->
 
       <nav>
-        <ul>
-          <li>Home</li>
-          <li>Take the Test</li>
-          <li>Log Out</li>
+        <section class="hamburger">
+          <div></div>
+          <div></div>
+          <div></div>
+        </section>
+
+
+        <ul class="main-nav">
+          <li id="home">Home</li>
+          <li id="retest">Take the Test</li>
+          <li id="logout">Log Out</li>
         </ul>
       </nav>
 
@@ -81,26 +95,26 @@
             required autocomplete="off">
             <p>Password must be 4-8 characters, numbers and lowercase letters only.</p>
           </fieldset>
-          <button id="log-in-button" type="submit">Get Started</button>
+          <button id="log-in-button" type="button">Get Started</button>
           <button id="new-user-button" type="button">New User?</button>
-          <button id="sign-up-button" type="submit">Sign Up</button>
+          <button id="sign-up-button" type="button">Sign Up</button>
         </form>
 
       </section>
 
-      <section id="personality" class="personality container">
+      <section class="personality container">
         <ol>
           <li>
             You are totally exhausted because your week was endless and less than great. How are you going to spend your weekend?
             <form>
               <fieldset>
-                <input type="radio" id="e" name="ei" value="e" requires>
+                <input type="radio" id="e" name="ei" value="e" required>
                 <label for="e">
                   I’ll call my friends to ask about their plans I’ll suggest we all go out together to check out the new restaurant/club.
                 </label>
               </fieldset>
               <fieldset>
-                <input type="radio" id="i" name="ei" value="i">
+                <input type="radio" id="i" name="ei" value="i" required>
                 <label for="i">
                   I’ll switch on the "Don’t disturb" mode on my phone and stay at home. I’ll watch a new episode of my favorite TV show, do a puzzle, and take a long bath with a book.
                 </label>
@@ -163,22 +177,30 @@
             </form>
           </li>
         </ol>
-        <button type="submit">Show Me the Movies!</button>
+        <div id="show-button">
+          <button id="personality" type="button">Show Me the Movies!</button>
+        </div>
       </section>
 
       <section id="dashboard" class="dashboard container">
-        <ul id="movie-suggestions">
-        </ul>
+        <h2>Our Suggestions</h2>
+        <div id="movie-suggestions">
+        </div>
       </section>
 
       <section id="watchlist" class="watchlist container">
-        <ul id="movie-list">
-        </ul>
+        <h2>Watch List</h2>
+        <div id="movie-list">
+        </div>
+        <!-- <button id="go-to-watch">Go to Watch List</button> -->
+        <!-- <button class="test-button">New Movie Recommendations</button> -->
       </section>
 
     </main>
-
     <footer>
+      <div class="tmdb">
+        <img src="img/tmdb-rectangle-logo.png">
+      </div>
       <!-- app icons and social media links -->
     </footer>
 
@@ -189,11 +211,12 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
     <script src="https://cdn.rawgit.com/visionmedia/page.js/master/page.js"></script>
     <script src="scripts/models/movie.js"></script>
-    <script src="scripts/controller/routes.js"></script>
+    <!-- <script src="scripts/controller/routes.js"></script> -->
     <script src="scripts/models/user.js"></script>
+    <script src="scripts/views/menuView.js"></script>
     <script src="scripts/views/errorView.js"></script>
     <script src="scripts/views/loginView.js"></script>
-    <!-- <script src="scripts/models/movieView.js"></script> -->
+    <script src="scripts/views/movieView.js"></script>
 
   </body>
 </html>

@@ -25,7 +25,7 @@ app.use(express.static('./public'));
 app.use(bodyparser.urlencoded({ extended: true }));
 app.use(bodyparser.json());
 
-
+// This get request is for a list of movies by genre from the movie db
 app.get('/api/v1/chillfellows/search/:genre', (req, res) => {
   // console.log('inside search route');
   let url =
@@ -50,9 +50,87 @@ app.get('/api/v1/chillfellows/search/:genre', (req, res) => {
     })
     .catch(console.error)
 })
-// app.get('api/v1/chillfellows/search/user/:id', (req, res) => {
-//
-// })
+
+
+
+app.get('/api/v1/chillfellows/user/username/:username', (req, res) => {
+  console.log('inside get one by user', req.params.username);
+  client.query(`SELECT DISTINCT first_name, last_name, mb_score, password, username, user_id FROM users WHERE username='${req.params.username}';`)
+    .then(result => {
+      // console.log('return from sql request one user',result);
+      res.send(result);
+    })
+    .catch(error => console.error(error))
+})
+
+app.get('/api/v1/chillfellows/getwatchlist/:username', (req, res) => {
+  console.log('hit getwatchlsit route');
+  client.query(`SELECT movie_name, movie_id, movie_genre, movie_overview,
+  poster_path, movie_watched, username FROM watchlist INNER JOIN users ON watchlist.user_id = users.user_id WHERE username='${req.params.username}';`)
+    .then(result => {
+      console.log('watchlist results', result.rows);
+      res.send(result.rows);
+    })
+    .catch(err => console.error(err))
+})
+
+app.post('/api/v1/chillfellows/newuser/', (req, res) => {
+  client.query(`INSERT INTO users (first_name, last_name, mb_score, username, password)
+  VALUES ($1, $2, $3, $4, $5) ON CONFLICT DO NOTHING;`,
+    [
+      req.body.first_name,
+      req.body.last_name,
+      req.body.mb_score,
+      req.body.username,
+      req.body.password
+    ]
+  )
+    .then(res.send('insert complete'))
+})
+
+app.post('/api/v1/chillfellows/newmovie/', (req, res) => {
+  console.log(req.body);
+  client.query(`INSERT INTO watchlist (movie_name, movie_id, movie_genre, movie_overview,
+  poster_path, user_id)
+  VALUES ($1, $2, $3, $4, $5, $6) ON CONFLICT DO NOTHING;`,
+    [
+      req.body.title,
+      req.body.id,
+      req.body.genre,
+      req.body.overview,
+      req.body.poster_path,
+      req.body.user_id
+    ]
+  )
+    .then(res.send('insert  movie complete'))
+    .catch(err => console.error(err))
+})
+
+
+app.put('/api/v1/chillfellows/update/:id', (req, res) => {
+  console.log('inside update');
+  client.query(`UPDATE users SET first_name=$1, last_name=$2, mb_score=$3, password=$4 WHERE username=$5`, [
+    req.body.first_name,
+    req.body.last_name,
+    req.body.mb_score,
+    req.body.password,
+    req.params.id
+  ])
+    .then(res.send('user updated'))
+})
+
+app.delete('/api/v1/chillfellow/deletemovie/:id', (req, res) => {
+  client.query(`DELETE FROM watchlist WHERE movie_id=$1;`,
+    [ req.params.id])
+    .then(() => {
+      res.send('Delete Complete')
+    })
+    .catch((err) => {
+      console.error(err)
+    })
+});
+
+
 app.get('/', (req, res) => {
   res.sendFile('index.html', {root: './public'});
 });
@@ -76,11 +154,17 @@ function createTables() {
       password VARCHAR(20) NOT NULL
     );`)
     .catch(console.error);
- client.query(`
+  client.query(`
     CREATE TABLE IF NOT EXISTS watchlist
     (wl_id SERIAL PRIMARY KEY,
     user_id INTEGER, FOREIGN KEY (user_id) REFERENCES users(user_id),
     movie_name VARCHAR(255) NOT NULL,
-    movie_genre VARCHAR(20) NOT NULL);`);
+    movie_id VARCHAR(255) NOT NULL,
+    movie_genre VARCHAR(20),
+    movie_overview VARCHAR(4000) NOT NULL,
+    poster_path VARCHAR(255) NOT NULL,
+    movie_watched BOOLEAN
+
+    );`)
 
 }

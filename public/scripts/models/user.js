@@ -10,21 +10,7 @@ var __API_URL__ = 'http://localhost:3000';
     Object.keys(userObj).forEach(key => this[key] = userObj[key]);
   }
 
-  User.all = [];
-  let bob = new User({
-    first_name: 'bob',
-    last_name: 'thornton',
-    mb_score: 'ENFJ',
-    username:'bobt',
-    password:'pass123'
-  });
-  let sam = new User({
-    first_name: 'sam',
-    last_name: 'butterton',
-    mb_score: 'AAAA',
-    username:'samb',
-    password:'pass456'
-  })
+
 
   User.create = function(user) {
     $.post(`${__API_URL__}/api/v1/chillfellows/newuser/`, user) //check filepath for usertable
@@ -63,7 +49,7 @@ var __API_URL__ = 'http://localhost:3000';
           console.log('username', user.username);
           localStorage.username = JSON.stringify(user.username);
           localStorage.user_id = JSON.stringify(response.rows[0].user_id);
-          app.Movieview.initWatchlistPage();
+          app.movieView.initWatchlistPage();
         }
       })
       .catch(app.errorCallback);

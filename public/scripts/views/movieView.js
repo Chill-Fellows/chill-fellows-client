@@ -85,9 +85,6 @@ var app = app || {};
     // app.Movie.all.map(movie => $('#movie-suggestions').append(movie.toHtml))
 
     // console.log('movie', movie);
-
-
-
     $('#go-to-watch').on('click', function(event) {
       movieView.initWatchlistPage();
     })
@@ -101,12 +98,11 @@ var app = app || {};
      $('#movie-list').empty;
 
 
-     app.Movie.loadAll(ctx);
 
-     app.Movie.loadWatchList();
+     app.Movie.getWatchList();
 
-     let template = Handlebars.compile($('#watchlist-template').text());
-     $('#movie-list').append(template(ctx.movie));
+
+
 
      $('#delete-button').on('click', function(event) {
        event.preventDefault();

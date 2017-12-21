@@ -59,22 +59,32 @@ fieldset p {
   font-size: 20px;
 }
 
-#dashboard {
+.test-button {
+  text-align: center;
+  margin-top: 40px;
+  margin-bottom: 50px;
+  height: 70px;
+  width: 30%;
+  font-size: 20px;
+}
+
+#dashboard, #watchlist {
   margin-top: 50px;
   text-align: center;
 }
 
-#dashboard h2 {
+#dashboard h2, #watchlist h2 {
   font-size: 40px;
 }
 
-#movie-suggestions img {
+#movie-suggestions img, #movie-list img {
   width: 30%;
 }
 
-#movie-suggestions ul {
+#movie-suggestions ul, #movie-list ul {
   font-size: 30px;
 }
+
 
 .movie-items {
   margin-bottom: 50px;

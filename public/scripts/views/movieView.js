@@ -104,10 +104,12 @@ var app = app || {};
 
 
 
-     $('#delete-button').on('click', function(event) {
-       event.preventDefault();
-       app.Movie.delete($(this).parent().parent().data('movieid'))
-     });
+     // $('#delete-button').on('click', function(event) {
+     //   event.preventDefault();
+     //   app.Movie.delete($(this).data('id'));
+     //   $(this).data('id').hide();
+       // $(this).parent().parent().data('movieid').hide();
+     // });
 
      $('#test-button').on('click', function(event) {
        event.preventDefault();

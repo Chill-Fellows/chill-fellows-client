@@ -24,26 +24,34 @@ var __API_URL__ = 'http://localhost:3000';
     return template(this);
   }
 
+  Movie.prototype.toWatchlist = function() {
+    let template = Handlebars.compile($('#watchlist-template').text());
+    return template(this);
+  }
   // placeholder to store movie objects
   Movie.all = [];
 
   // function to sort movies by title and run through constructor function
   Movie.loadAll = rows => {
-    // rows.sort((a,b) => b.title - a.title);
+
     Movie.all = rows.map(movieObj => new Movie(movieObj));
     Movie.all.map(movie => {
       $('#movie-suggestions').append(movie.toHtml());
     })
 
     $('.add-button').on('click', function() {
-      console.log('clicked');
-      console.log($(this).parent().parent().data('movieid'));
+      // console.log('clicked');
+      // console.log($(this).parent().parent().data('movieid'));
       Movie.addToDB($(this).parent().parent().data('movieid'))
     });
   }
 
   Movie.loadWatchList = rows => {
+    console.log('result inside of loadwatchlist', rows);
     Movie.all = rows.map(movieObj => new Movie(movieObj));
+    Movie.all.map(movie => {
+      $('#movie-list').append(movie.toWatchlist());
+    })
   }
 
 
@@ -69,17 +77,19 @@ var __API_URL__ = 'http://localhost:3000';
   Movie.addToDB = movie_id => {
     let movieToAdd = Movie.all.filter(movie => movie.id === movie_id);
     movieToAdd[0].user_id = JSON.parse(localStorage.user_id);
-
-    console.log('movie to add', movieToAdd[0]);
-
+    // console.log('movie to add', movieToAdd[0]);
     $.post(`${__API_URL__}/api/v1/chillfellows/newmovie/`, movieToAdd[0])
       .then(console.log)
       .catch(errorCallback);
   }
 
-  Movie.getWatchList = movie => {
-    $.get(`${__API_URL__}/api/v1/chillfellows`, movie)
-      .then(dataFromWatchlist => Movie.loadWatchList(dataFromWatchlist))
+  Movie.getWatchList = () => {
+    let currentUser = JSON.parse(localStorage.username);
+    $.get(`${__API_URL__}/api/v1/chillfellows/getwatchlist/${currentUser}`)
+      .then(dataFromWatchlist => {
+        console.log('data from user watchlist search',dataFromWatchlist);
+        Movie.loadWatchList(dataFromWatchlist)
+      })
       .catch (errorCallback);
   }
 

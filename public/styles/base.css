@@ -1,19 +1,25 @@
-body {
+html, body {
   height: 100%;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
   margin: 0 auto;
   font-family: helvetica;
 }
 
-.wrapper {
+/* .wrapper {
   min-height: 100%;
   margin-bottom: -150px;
-}
+} */
 
-.push {
-  height: 150px;
+main {
+  flex: 1 0 auto;
 }
 
 footer {
   background-image: url(../img/footer-image2.jpg);
-  height: 150px;
+  /* height: 150px; */
+
 }

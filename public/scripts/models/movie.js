@@ -2,7 +2,8 @@
 
 var app =  app || {};
 
-var __API_URL__ = 'http://localhost:3000';
+// var __API_URL__ = 'http://localhost:3000';
+var __API_URL__ = 'https://chill-fellows.herokuapp.com/';
 
 (function(module) {
 
@@ -90,7 +91,7 @@ var __API_URL__ = 'http://localhost:3000';
     $.get(`${__API_URL__}/api/v1/chillfellows/getwatchlist/${currentUser}`)
       .then(dataFromWatchlist => {
         console.log('data from user watchlist search',dataFromWatchlist);
-      
+
         Movie.loadWatchList(dataFromWatchlist)
       })
       .catch (errorCallback);

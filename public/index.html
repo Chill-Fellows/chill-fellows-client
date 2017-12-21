@@ -31,12 +31,12 @@
     <script id="watchlist-template" type="text/x-handlebars-template">
       <ul>
         <li class="movie-items" data-movieid={{movie_id}}>
-            <img src={{poster_path}}>
+            <img src="https://image.tmdb.org/t/p/w500/{{poster_path}}">
             <div class="movie-overlay">
-              <h3>{{title}}</h3>
+              <h3>{{movie_name}}</h3>
               <!-- <p>{{overview}}</p> -->
               <button class="delete-button">Remove from Watch List</button>
-              <button class="test-button">New Movie Recommendations</button>
+              <!-- <button class="test-button">New Movie Recommendations</button> -->
             </div>
         </li>
       </ul>
@@ -192,7 +192,8 @@
         <h2>Watch List</h2>
         <div id="movie-list">
         </div>
-        <button id="go-to-watch">Go to Watch List</button>
+        <!-- <button id="go-to-watch">Go to Watch List</button> -->
+        <button class="test-button">New Movie Recommendations</button>
       </section>
 
     </main>

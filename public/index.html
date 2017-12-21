@@ -35,7 +35,7 @@
             <div class="movie-overlay">
               <h3>{{movie_name}}</h3>
               <!-- <p>{{overview}}</p> -->
-              <button class="delete-button">Remove from Watch List</button>
+              <button id="delete-button" data-id={{movie_id}}>Remove from Watch List</button>
               <!-- <button class="test-button">New Movie Recommendations</button> -->
             </div>
         </li>
@@ -186,6 +186,7 @@
         <h2>Our Suggestions</h2>
         <div id="movie-suggestions">
         </div>
+        <button id="dash">Go to Watch List</button>
       </section>
 
       <section id="watchlist" class="watchlist container">

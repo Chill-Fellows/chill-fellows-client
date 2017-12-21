@@ -74,6 +74,16 @@ app.get('/api/v1/chillfellows/getwatchlist/:username', (req, res) => {
     .catch(err => console.error(err))
 })
 
+app.get('/api/v1/chillfellows/getwatchlistbymovieid/:username', (req, res) => {
+  console.log('hit getwatchlsit route');
+  client.query(`SELECT movie_id FROM watchlist INNER JOIN users ON watchlist.user_id = users.user_id WHERE username='${req.params.username}';`)
+    .then(result => {
+      console.log('watchlist by movie id resulst', result.rows);
+      res.send(result.rows);
+    })
+    .catch(err => console.error(err))
+})
+
 app.post('/api/v1/chillfellows/newuser/', (req, res) => {
   client.query(`INSERT INTO users (first_name, last_name, mb_score, username, password)
   VALUES ($1, $2, $3, $4, $5) ON CONFLICT DO NOTHING;`,

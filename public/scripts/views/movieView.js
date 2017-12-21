@@ -68,24 +68,30 @@ var app = app || {};
       app.User.update(user);
 
       // app.Movie.findGenre(mb_score, movieView.initDashboardPage(user));
-      movieView.initDashboardPage(user);
+      movieView.initDashboardPage();
     });
     // movieView.initDashboardPage(user);
   }
 
-  movieView.initDashboardPage = function(user) {
+  movieView.initDashboardPage = function() {
     console.log('dashboard');
-    console.log('user in dashboard', user);
+    console.log('user in dashboard');
     $('.container').hide();
     $('.dashboard').show();
     $('#movie-suggestions').empty();
-    console.log('user mb_score', user.mb_score);
-    app.Movie.findGenre(user.mb_score);
+    // console.log('user mb_score', user.mb_score);
+    let username = JSON.parse(localStorage.username);
+    $.get(`${__API_URL__}/api/v1/chillfellows/user/username/${username}`)
+      .then(result => {
+        console.log('inide initdash',result.rows[0].mb_score)
+        app.Movie.findGenre(result.rows[0].mb_score)
+      })
+    // app.Movie.findGenre(JSON.parse(localStorage.);
     // console.log('app.Movie.all', app.Movie.all);
     // app.Movie.all.map(movie => $('#movie-suggestions').append(movie.toHtml))
 
     // console.log('movie', movie);
-    $('#go-to-watch').on('click', function(event) {
+    $('#dash').on('click', function(event) {
       movieView.initWatchlistPage();
     })
   }
@@ -95,19 +101,9 @@ var app = app || {};
      console.log('watchlist');
      $('.container').hide();
      $('.watchlist').show();
-     $('#movie-list').empty;
-
-
-
+     $('#movie-list').empty();
      app.Movie.getWatchList();
 
-
-
-
-     $('#delete-button').on('click', function(event) {
-       event.preventDefault();
-       app.Movie.delete($(this).parent().parent().data('movieid'))
-     });
 
      $('#test-button').on('click', function(event) {
        event.preventDefault();

@@ -108,6 +108,18 @@ app.put('/api/v1/chillfellows/update/:id', (req, res) => {
     .then(res.send('user updated'))
 })
 
+app.delete('/api/v1/chillfellow/deletemovie/:id', (req, res) => {
+  client.query(`DELETE FROM watchlist WHERE movie_id=$1;`,
+    [ req.params.id])
+    .then(() => {
+      res.send('Delete Complete')
+    })
+    .catch((err) => {
+      console.error(err)
+    })
+});
+
+
 app.get('/', (req, res) => {
   res.sendFile('index.html', {root: './public'});
 });
@@ -137,8 +149,8 @@ function createTables() {
     user_id INTEGER, FOREIGN KEY (user_id) REFERENCES users(user_id),
     movie_name VARCHAR(255) NOT NULL,
     movie_id VARCHAR(255) NOT NULL,
-    movie_genre VARCHAR(20) NOT NULL,
-    movie_overview VARCHAR(255) NOT NULL,
+    movie_genre VARCHAR(20),
+    movie_overview VARCHAR(4000) NOT NULL,
     poster_path VARCHAR(255) NOT NULL,
     movie_watched BOOLEAN
 

@@ -32,9 +32,14 @@ var __API_URL__ = 'http://localhost:3000';
     // rows.sort((a,b) => b.title - a.title);
     Movie.all = rows.map(movieObj => new Movie(movieObj));
     Movie.all.map(movie => {
-
       $('#movie-suggestions').append(movie.toHtml());
     })
+
+    $('.add-button').on('click', function() {
+      console.log('clicked');
+      console.log($(this).parent().parent().data('movieid'));
+      Movie.addToDB($(this).parent().parent().data('movieid'))
+    });
   }
 
   Movie.loadWatchList = rows => {
@@ -64,7 +69,7 @@ var __API_URL__ = 'http://localhost:3000';
   Movie.addToDB = movie_id => {
     let movieToAdd = Movie.all.filter(movie => movie.id === movie_id);
     movieToAdd[0].user_id = JSON.parse(localStorage.user_id);
-    movieToAdd[0].genre = JSON.parse(localStorage.user_id);
+
     console.log('movie to add', movieToAdd[0]);
 
     $.post(`${__API_URL__}/api/v1/chillfellows/newmovie/`, movieToAdd[0])
@@ -81,7 +86,7 @@ var __API_URL__ = 'http://localhost:3000';
 // deletes movie from watchlist
   Movie.delete = id => {
     $.ajax({
-      url: `${__API_URL__}/api/v1/chillfellows/deletemovie/${id}`,
+      url: `${__API_URL__}/api/v1/chillfellow/deletemovie/${id}`,
       method: 'DELETE'
     })
       .then(console.log)
@@ -97,13 +102,7 @@ var __API_URL__ = 'http://localhost:3000';
 //       .catch(errorCallback);
 //   }
 
-// // adds movie to user's watchlist table
-//   Movie.create = movie => {
-//     $.post(`${__API_URL__}/api/v1/chillfellows`, movie)
-//       .then(console.log)
-//       // .then(() => page('/'))
-//       .catch(errorCallback);
-//   }
+
 
 
   // Movie.find = movie => {

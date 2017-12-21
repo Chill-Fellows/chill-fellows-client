@@ -64,8 +64,16 @@ fieldset p {
   text-align: center;
 }
 
+#dashboard h2 {
+  font-size: 40px;
+}
+
 #movie-suggestions img {
   width: 30%;
+}
+
+#movie-suggestions ul {
+  font-size: 30px;
 }
 
 .movie-items {

@@ -96,13 +96,7 @@ var app = app || {};
      $('.container').hide();
      $('.watchlist').show();
      $('#movie-list').empty;
-
-
-
      app.Movie.getWatchList();
-
-
-
 
      $('#delete-button').on('click', function(event) {
        event.preventDefault();

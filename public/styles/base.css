@@ -1,13 +1,19 @@
 body {
+  height: 100%;
   margin: 0 auto;
   font-family: helvetica;
 }
 
-main {
-  /* clear: both; */
+.wrapper {
+  min-height: 100%;
+  margin-bottom: -150px;
+}
+
+.push {
+  height: 150px;
 }
 
 footer {
   background-image: url(../img/footer-image2.jpg);
-  background-color: #444;
+  height: 150px;
 }

@@ -57,6 +57,7 @@ var __API_URL__ = 'http://localhost:3000';
           console.log('in else if');
           console.log('username', user.username);
           localStorage.username = JSON.stringify(user.username);
+          localStorage.user_id = JSON.stringify(response.rows[0].user_id);
           app.Movievie.initWatchlistPage();
         }
       })

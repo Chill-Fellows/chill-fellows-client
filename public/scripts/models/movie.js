@@ -38,9 +38,9 @@ var __API_URL__ = 'http://localhost:3000';
   }
 
   Movie.loadWatchList = rows => {
-    movie.all = rows.map(movieObj => new Movie(movieObj));
-    }
-  
+    Movie.all = rows.map(movieObj => new Movie(movieObj));
+  }
+
 
   // function to get movies from API based on genre, to be displayed on dashboard
   // remember to change fn call so that it takes the ctx from form.
@@ -55,29 +55,36 @@ var __API_URL__ = 'http://localhost:3000';
 
       .catch(errorCallback)
   }
-
-
+// Movie.testOne = movie_id => {
+//   let movieToAdd = Movie.all.filter(movie => movie.id === movie_id);
+//   movieToAdd[0].user_id = JSON.parse(localStorage.user_id);
+//   return movieToAdd;
+// }
   // function to add movies to database
-  Movie.addToDB = movie => {
-    $.post(`${__API_URL__}/api/v1/chillfellows`, movie)
+  Movie.addToDB = movie_id => {
+    let movieToAdd = Movie.all.filter(movie => movie.id === movie_id);
+    movieToAdd[0].user_id = JSON.parse(localStorage.user_id);
+    movieToAdd[0].genre = JSON.parse(localStorage.user_id);
+    console.log('movie to add', movieToAdd[0]);
+
+    $.post(`${__API_URL__}/api/v1/chillfellows/newmovie/`, movieToAdd[0])
       .then(console.log)
-    // .then(() => page('/'))
       .catch(errorCallback);
   }
 
   Movie.getWatchList = movie => {
-    $.get(`${__API_URL__}/api/v1/chillfellows`, movies)
-    .then(dataFromWatchlist => Movie.loadWatchList(dataFromWatchlist))
-    .catch (errorCallback);
+    $.get(`${__API_URL__}/api/v1/chillfellows`, movie)
+      .then(dataFromWatchlist => Movie.loadWatchList(dataFromWatchlist))
+      .catch (errorCallback);
   }
 
 // deletes movie from watchlist
   Movie.delete = id => {
     $.ajax({
-      url: `${__API_URL__}/api/v1/chillfellows/${id}`,
+      url: `${__API_URL__}/api/v1/chillfellows/deletemovie/${id}`,
       method: 'DELETE'
     })
-    // .then(() => page('/watchlist'))
+      .then(console.log)
       .catch(errorCallback);
   }
 

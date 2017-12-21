@@ -55,7 +55,7 @@ app.get('/api/v1/chillfellows/search/:genre', (req, res) => {
 
 app.get('/api/v1/chillfellows/user/username/:username', (req, res) => {
   console.log('inside get one by user', req.params.username);
-  client.query(`SELECT DISTINCT first_name, last_name, mb_score, password, username FROM users WHERE username='${req.params.username}';`)
+  client.query(`SELECT DISTINCT first_name, last_name, mb_score, password, username, user_id FROM users WHERE username='${req.params.username}';`)
     .then(result => {
       // console.log('return from sql request one user',result);
       res.send(result);
@@ -76,6 +76,25 @@ app.post('/api/v1/chillfellows/newuser/', (req, res) => {
   )
     .then(res.send('insert complete'))
 })
+
+app.post('/api/v1/chillfellows/newmovie/', (req, res) => {
+  console.log(req.body);
+  client.query(`INSERT INTO watchlist (movie_name, movie_id, movie_genre, movie_overview,
+  poster_path, user_id)
+  VALUES ($1, $2, $3, $4, $5, $6) ON CONFLICT DO NOTHING;`,
+    [
+      req.body.title,
+      req.body.id,
+      req.body.genre,
+      req.body.overview,
+      req.body.poster_path,
+      req.body.user_id
+    ]
+  )
+    .then(res.send('insert  movie complete'))
+    .catch(err => console.error(err))
+})
+
 
 app.put('/api/v1/chillfellows/update/:id', (req, res) => {
   console.log('inside update');
@@ -112,11 +131,17 @@ function createTables() {
       password VARCHAR(20) NOT NULL
     );`)
     .catch(console.error);
- client.query(`
+  client.query(`
     CREATE TABLE IF NOT EXISTS watchlist
     (wl_id SERIAL PRIMARY KEY,
     user_id INTEGER, FOREIGN KEY (user_id) REFERENCES users(user_id),
     movie_name VARCHAR(255) NOT NULL,
-    movie_genre VARCHAR(20) NOT NULL);`);
+    movie_id VARCHAR(255) NOT NULL,
+    movie_genre VARCHAR(20) NOT NULL,
+    movie_overview VARCHAR(255) NOT NULL,
+    poster_path VARCHAR(255) NOT NULL,
+    movie_watched BOOLEAN
+
+    );`)
 
 }

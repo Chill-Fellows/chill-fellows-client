@@ -1,5 +1,12 @@
 'use strict'
 
+// $('.add-button').on('click', function() {
+//   // event.preventDefault();
+//   console.log('clicked');
+//   console.log($(this).parent().parent().data('movieid'));
+//   app.Movie.addToDB($(this).parent().parent().data('movieid'))
+// });
+
 var app = app || {};
 
 (function(module) {
@@ -49,15 +56,17 @@ var app = app || {};
       if (radioValue === 'isfj') mb_score = 14;
       if (radioValue === 'istp') mb_score = 28;
       if (radioValue === 'istj') mb_score = 35;
-      if (radioValue.split('').length != 4) {
+      if (radioValue.split('').length !== 4) {
         alert('you must answer all questions');
         movieView.initTestPage();
         return
       }
 
       console.log('mb score', mb_score);
-      user.mb_score = mb_score;
       console.log('user', user);// ?
+      user.mb_score = mb_score;
+      app.User.update(user);
+
       // app.Movie.findGenre(mb_score, movieView.initDashboardPage(user));
       movieView.initDashboardPage(user);
     });
@@ -77,9 +86,7 @@ var app = app || {};
 
     // console.log('movie', movie);
 
-    $('.add-button').on('click', function(event) {
-      app.Movie.addToDB($(this).parent().parent().data('movieid'))
-    });
+
 
     $('#go-to-watch').on('click', function(event) {
       movieView.initWatchlistPage();
@@ -93,7 +100,7 @@ var app = app || {};
      $('.watchlist').show();
      $('#movie-list').empty;
 
-     
+
      app.Movie.loadAll(ctx);
 
      app.Movie.loadWatchList();

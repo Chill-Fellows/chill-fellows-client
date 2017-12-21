@@ -48,8 +48,9 @@ var app = app || {};
        password: $('#password').val(),
        mb_score: ''
      })
+     app.User.validate(user);
      console.log('user sign up', user);
-     app.movieView.initTestPage(user);
+     // app.movieView.initTestPage(user);
    })
  }
 

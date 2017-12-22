@@ -123,3 +123,10 @@ fieldset p {
 .about-us li:first-child {
   margin-left: 30px;
 }
+
+/* @media screen and (min-width: 640px) {
+
+  #movie-suggestions li, #movie-list li {
+    float: left;
+  }
+} */

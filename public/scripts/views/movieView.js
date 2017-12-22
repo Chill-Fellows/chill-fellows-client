@@ -1,12 +1,5 @@
 'use strict'
 
-// $('.add-button').on('click', function() {
-//   // event.preventDefault();
-//   console.log('clicked');
-//   console.log($(this).parent().parent().data('movieid'));
-//   app.Movie.addToDB($(this).parent().parent().data('movieid'))
-// });
-
 var app = app || {};
 
 (function(module) {
@@ -15,7 +8,7 @@ var app = app || {};
   let mb_score;
 
   movieView.initIndexPage = function() {
-    console.log('init');
+
     $('.container').hide();
     if (localStorage.username) $('.watchlist').show();
     if (!localStorage.username) {
@@ -24,14 +17,12 @@ var app = app || {};
   }
 
   movieView.initTestPage = function (user) {
-    
-    // console.log('test', user);
+
     $('.container').hide();
     $('.personality').show();
 
     $('#personality').on('click', user, function(event) {
       event.preventDefault();
-      // console.log('hitting submit');
 
       let radioValue = '';
 
@@ -39,7 +30,6 @@ var app = app || {};
       radioValue += `${$('input[name= "sn"]:checked').val()}`;
       radioValue += `${$('input[name= "tf"]:checked').val()}`;
       radioValue += `${$('input[name= "jp"]:checked').val()}`;
-      console.log('radioValue', radioValue);
 
       if (radioValue === 'estj') mb_score = 36;
       if (radioValue === 'entj') mb_score = 10752;
@@ -63,35 +53,23 @@ var app = app || {};
         return
       }
 
-      console.log('mb score', mb_score);
-      console.log('user', user);// ?
       user.mb_score = mb_score;
       app.User.update(user);
 
-      // app.Movie.findGenre(mb_score, movieView.initDashboardPage(user));
       movieView.initDashboardPage();
     });
-    // movieView.initDashboardPage(user);
   }
 
   movieView.initDashboardPage = function() {
-    console.log('dashboard');
-    console.log('user in dashboard');
     $('.container').hide();
     $('.dashboard').show();
     $('#movie-suggestions').empty();
-    // console.log('user mb_score', user.mb_score);
     let username = JSON.parse(localStorage.username);
     $.get(`${__API_URL__}/api/v1/chillfellows/user/username/${username}`)
       .then(result => {
         console.log('inide initdash',result.rows[0].mb_score)
         app.Movie.findGenre(result.rows[0].mb_score)
       })
-    // app.Movie.findGenre(JSON.parse(localStorage.);
-    // console.log('app.Movie.all', app.Movie.all);
-    // app.Movie.all.map(movie => $('#movie-suggestions').append(movie.toHtml))
-
-    // console.log('movie', movie);
     $('#dash').on('click', function(event) {
       movieView.initWatchlistPage();
     })
@@ -99,18 +77,16 @@ var app = app || {};
 
   //this function will show the list of movies the user has selected for future viewing
   movieView.initWatchlistPage = () => {
-     console.log('watchlist');
-     $('.container').hide();
-     $('.watchlist').show();
-     $('#movie-list').empty();
-     app.Movie.getWatchList();
+    $('.container').hide();
+    $('.watchlist').show();
+    $('#movie-list').empty();
+    app.Movie.getWatchList();
 
-
-     $('#test-button').on('click', function(event) {
-       event.preventDefault();
-       movieView.initTestPage();
-     });
-   }
+    $('#test-button').on('click', function(event) {
+      event.preventDefault();
+      movieView.initTestPage();
+    });
+  }
 
 
   module.movieView = movieView;

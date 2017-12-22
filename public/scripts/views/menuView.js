@@ -1,5 +1,5 @@
 'use strict';
-
+var __API_URL__ = 'https://chill-fellows.herokuapp.com';
 
 let handleNav = () => {
   $('.hamburger').on('click', function() {
@@ -8,7 +8,6 @@ let handleNav = () => {
 
   $('#logout').on('click', function() {
     localStorage.clear();
-    // app.loginView.initLoginPage();
     location.reload(true);
   })
 
@@ -17,9 +16,13 @@ let handleNav = () => {
   })
 
   $('#retest').on('click', function() {
-    // let user = app.User.getOne(JSON.stringify(localStorage.username));
-    $.get(`${__API_URL__}/api/v1/chillfellows/user/username/${username}`)
-    .then(user => app.movieView.initTestPage(user))
+    if (localStorage.username === undefined) {
+      app.loginView.initLoginPage();
+    } else {
+      let username = JSON.parse(localStorage.username);
+      $.get(`${__API_URL__}/api/v1/chillfellows/user/username/${username}`)
+        .then(user => app.movieView.initTestPage(user))
+}
   })
 
   $('#about').on('click', function() {

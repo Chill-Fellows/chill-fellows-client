@@ -27,7 +27,6 @@ app.use(bodyparser.json());
 
 // This get request is for a list of movies by genre from the movie db
 app.get('/api/v1/chillfellows/search/:genre', (req, res) => {
-  // console.log('inside search route');
   let url =
   `https://api.themoviedb.org/3/discover/movie?api_key=${TMDB_API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_genres=${req.params.genre}`;
   superagent.get(url)
@@ -57,28 +56,23 @@ app.get('/api/v1/chillfellows/user/username/:username', (req, res) => {
   console.log('inside get one by user', req.params.username);
   client.query(`SELECT DISTINCT first_name, last_name, mb_score, password, username, user_id FROM users WHERE username='${req.params.username}';`)
     .then(result => {
-      // console.log('return from sql request one user',result);
       res.send(result);
     })
     .catch(error => console.error(error))
 })
 
 app.get('/api/v1/chillfellows/getwatchlist/:username', (req, res) => {
-  console.log('hit getwatchlsit route');
   client.query(`SELECT movie_name, movie_id, movie_genre, movie_overview,
   poster_path, movie_watched, username FROM watchlist INNER JOIN users ON watchlist.user_id = users.user_id WHERE username='${req.params.username}';`)
     .then(result => {
-      console.log('watchlist results', result.rows);
       res.send(result.rows);
     })
     .catch(err => console.error(err))
 })
 
 app.get('/api/v1/chillfellows/getwatchlistbymovieid/:username', (req, res) => {
-  console.log('hit getwatchlsit route');
   client.query(`SELECT movie_id FROM watchlist INNER JOIN users ON watchlist.user_id = users.user_id WHERE username='${req.params.username}';`)
     .then(result => {
-      console.log('watchlist by movie id resulst', result.rows);
       res.send(result.rows);
     })
     .catch(err => console.error(err))
@@ -99,7 +93,6 @@ app.post('/api/v1/chillfellows/newuser/', (req, res) => {
 })
 
 app.post('/api/v1/chillfellows/newmovie/', (req, res) => {
-  console.log(req.body);
   client.query(`INSERT INTO watchlist (movie_name, movie_id, movie_genre, movie_overview,
   poster_path, user_id)
   VALUES ($1, $2, $3, $4, $5, $6) ON CONFLICT DO NOTHING;`,
@@ -118,7 +111,6 @@ app.post('/api/v1/chillfellows/newmovie/', (req, res) => {
 
 
 app.put('/api/v1/chillfellows/update/:id', (req, res) => {
-  console.log('inside update');
   client.query(`UPDATE users SET first_name=$1, last_name=$2, mb_score=$3, password=$4 WHERE username=$5`, [
     req.body.first_name,
     req.body.last_name,
@@ -153,7 +145,6 @@ createTables();
 app.listen(PORT, () => console.log(`Listening on port: ${PORT}`));
 
 function createTables() {
-  console.log('in create table function');
   client.query(`
     CREATE TABLE IF NOT EXISTS users(
       user_id SERIAL PRIMARY KEY,

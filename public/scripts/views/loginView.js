@@ -5,9 +5,6 @@ var app = app || {};
 // This function runs when there is a new user or when the user needs to log in
 (function (module) {
   const loginView = {};
-  let username;
-  let password;
-
 
   loginView.initLoginPage = function() {
     $('.container').hide();
@@ -27,7 +24,6 @@ var app = app || {};
         password: $('#password').val(),
       }
       app.User.validate(user);
-      // localStorage.username = user.username;
       app.movieView.initWatchlistPage();
     })
   }
@@ -49,8 +45,6 @@ var app = app || {};
         mb_score: ''
       })
       app.User.validate(user);
-      console.log('user sign up', user);
-      // app.movieView.initTestPage(user);
     })
   }
 

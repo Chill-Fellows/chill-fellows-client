@@ -6,8 +6,6 @@ var app =  app || {};
 //var __API_URL__ = 'http://localhost:3000';
 var __API_URL__ = 'https://chill-fellows.herokuapp.com';
 
-
-
 (function(module) {
 
   function errorCallback(err) {
@@ -27,11 +25,12 @@ var __API_URL__ = 'https://chill-fellows.herokuapp.com';
     let template = Handlebars.compile($('#dashboard-template').text());
     return template(this);
   }
-
+ //Load the users watchlist into app.Movie.all
   Movie.prototype.toWatchlist = function() {
     let template = Handlebars.compile($('#watchlist-template').text());
     return template(this);
   }
+
   // placeholder to store movie objects
   Movie.all = [];
 
@@ -47,9 +46,8 @@ var __API_URL__ = 'https://chill-fellows.herokuapp.com';
       Movie.addToDB($(this).parent().parent().data('movieid'))
     });
   }
-
+// appends the items in the watchlist to the watchlist id
   Movie.loadWatchList = rows => {
-    console.log('result inside of loadwatchlist', rows);
     Movie.all = rows.map(movieObj => new Movie(movieObj));
     Movie.all.map(movie => {
       $('#movie-list').append(movie.toWatchlist());
@@ -58,15 +56,13 @@ var __API_URL__ = 'https://chill-fellows.herokuapp.com';
     $('.delete-button').on('click', function(event) {
       event.preventDefault();
       app.Movie.delete($(this).data('id'));
-      // $(this).data('id').hide();
     });
   }
 
-
   // function to get movies from API based on genre, to be displayed on dashboard
-  // remember to change fn call so that it takes the ctx from form.
+
   Movie.findGenre = genre => {
-    console.log('genre', genre);
+
     $.get(`/api/v1/chillfellows/search/${genre}`)
       .then(datafromsearch => Movie.loadAll(datafromsearch))
       .catch(errorCallback)
@@ -99,7 +95,7 @@ var __API_URL__ = 'https://chill-fellows.herokuapp.com';
       let currentUser = JSON.parse(localStorage.username);
       $.get(`${__API_URL__}/api/v1/chillfellows/getwatchlist/${currentUser}`)
         .then(dataFromWatchlist => {
-          console.log('data from user watchlist search',dataFromWatchlist);
+
 
           Movie.loadWatchList(dataFromWatchlist)
         })

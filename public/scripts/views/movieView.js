@@ -24,6 +24,7 @@ var app = app || {};
   }
 
   movieView.initTestPage = function (user) {
+    
     // console.log('test', user);
     $('.container').hide();
     $('.personality').show();

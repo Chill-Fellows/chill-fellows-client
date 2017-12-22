@@ -51,7 +51,7 @@ var __API_URL__ = 'http://localhost:3000';
       $('#movie-list').append(movie.toWatchlist());
     });
 
-    $('#delete-button').on('click', function(event) {
+    $('.delete-button').on('click', function(event) {
       event.preventDefault();
       app.Movie.delete($(this).data('id'));
       // $(this).data('id').hide();
@@ -78,7 +78,7 @@ var __API_URL__ = 'http://localhost:3000';
       .then(databyid => {
         let testArray = databyid.filter(movie => movie.movie_id == movieToAdd[0].id);
         if (testArray.length === 0) {
-        $.post(`${__API_URL__}/api/v1/chillfellows/newmovie/`, movieToAdd[0]);
+          $.post(`${__API_URL__}/api/v1/chillfellows/newmovie/`, movieToAdd[0]);
         }
       })
       .then(console.log)
@@ -86,15 +86,21 @@ var __API_URL__ = 'http://localhost:3000';
   }
 
   Movie.getWatchList = () => {
-    let currentUser = JSON.parse(localStorage.username);
-    $.get(`${__API_URL__}/api/v1/chillfellows/getwatchlist/${currentUser}`)
-      .then(dataFromWatchlist => {
-        console.log('data from user watchlist search',dataFromWatchlist);
-      
-        Movie.loadWatchList(dataFromWatchlist)
-      })
-      .catch (errorCallback);
-  }
+
+    if (localStorage.username === undefined) {
+      app.loginView.initLoginPage();
+    } else {
+
+      let currentUser = JSON.parse(localStorage.username);
+      $.get(`${__API_URL__}/api/v1/chillfellows/getwatchlist/${currentUser}`)
+        .then(dataFromWatchlist => {
+          console.log('data from user watchlist search',dataFromWatchlist);
+
+          Movie.loadWatchList(dataFromWatchlist)
+        })
+        .catch (errorCallback);
+    }
+}
 
 // deletes movie from watchlist
   Movie.delete = id => {

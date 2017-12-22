@@ -6,15 +6,11 @@ var app =  app || {};
 //var __API_URL__ = 'http://localhost:3000';
 var __API_URL__ = 'https://chill-fellows.herokuapp.com';
 
-
-
 (function(module) {
 
   function User (userObj) {
     Object.keys(userObj).forEach(key => this[key] = userObj[key]);
   }
-
-
 
   User.create = function(user) {
     $.post(`${__API_URL__}/api/v1/chillfellows/newuser/`, user) //check filepath for usertable
@@ -29,19 +25,14 @@ var __API_URL__ = 'https://chill-fellows.herokuapp.com';
   }
 
   User.getOne = function(username) {
-    console.log('inside usergetone');
-
     $.get(`${__API_URL__}/api/v1/chillfellows/user/username/${username}`)
       .then(response => {
         console.log('response from get one',response.rows[0]);
         return response.rows[0];
-
       })
   }
 
   User.validate = function(user) {
-    console.log('user password', user.password);
-
     $.get(`${__API_URL__}/api/v1/chillfellows/user/username/${user.username}`)
       .then(response => {
         if (response.rows.length === 0) {
@@ -49,8 +40,6 @@ var __API_URL__ = 'https://chill-fellows.herokuapp.com';
           app.movieView.initTestPage(user);
         }
         if (response.rows[0].password === user.password){
-          console.log('in else if');
-          console.log('username', user.username);
           localStorage.username = JSON.stringify(user.username);
           localStorage.user_id = JSON.stringify(response.rows[0].user_id);
           app.movieView.initWatchlistPage();
@@ -58,8 +47,6 @@ var __API_URL__ = 'https://chill-fellows.herokuapp.com';
       })
       .catch(app.errorCallback);
   }
-
-
 
   User.update = function(userObj) {
     $.ajax({

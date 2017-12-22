@@ -2,8 +2,10 @@
 
 var app =  app || {};
 
+
 //var __API_URL__ = 'http://localhost:3000';
 var __API_URL__ = 'https://chill-fellows.herokuapp.com';
+
 
 
 (function(module) {
@@ -89,6 +91,7 @@ var __API_URL__ = 'https://chill-fellows.herokuapp.com';
 
   Movie.getWatchList = () => {
 
+
     if (localStorage.username === undefined) {
       app.loginView.initLoginPage();
     } else {
@@ -103,6 +106,7 @@ var __API_URL__ = 'https://chill-fellows.herokuapp.com';
         .catch (errorCallback);
     }
 }
+
 
 // deletes movie from watchlist
   Movie.delete = id => {
